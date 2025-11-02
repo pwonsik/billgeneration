@@ -11,7 +11,7 @@ DECLARE
   v_random_dist        NUMBER;
 BEGIN
   -- 10,000건의 데이터를 생성하기 위한 루프
-  FOR i IN 1..10 LOOP
+  FOR i IN 1..10000 LOOP
     -- 대표서비스관리번호 생성 (임의의 10자리 숫자)
     v_rep_svc_mgmt_num := TRUNC(DBMS_RANDOM.VALUE(1000000000, 10000000000));
 

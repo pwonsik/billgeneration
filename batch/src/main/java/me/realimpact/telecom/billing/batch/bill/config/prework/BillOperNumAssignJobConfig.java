@@ -5,7 +5,6 @@ import static me.realimpact.telecom.billing.batch.constant.BatchConstants.CHUNK_
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
-import org.mybatis.spring.batch.builder.MyBatisBatchItemWriterBuilder;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -26,13 +25,15 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.realimpact.telecom.bill.prework.domain.InvObjAcnt;
 import me.realimpact.telecom.billing.batch.bill.partitioner.prework.BillOperNumAssignPartitioner;
 import me.realimpact.telecom.billing.batch.bill.processor.prework.BillOperNumAssignProcessor;
 import me.realimpact.telecom.billing.batch.bill.reader.prework.BillOperNumAssignReader;
+import me.realimpact.telecom.billing.batch.bill.support.listener.BillOperNumAssignStepListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.DateRangeJobExecutionListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.LoggingJobExecutionListener;
 import me.realimpact.telecom.billing.batch.bill.support.validator.DefaultJobParametersValidator;
-import me.realimpact.telecom.bill.prework.domain.InvObjAcnt;
+import me.realimpact.telecom.billing.batch.bill.writer.prework.BillOperNumAssignItemWriter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -54,7 +55,7 @@ public class BillOperNumAssignJobConfig {
                 .validator(defaultJobParametersValidator)
                 .listener(loggingJobExecutionListener)
                 .listener(dateRangeJobExecutionListener)
-                .start(billOperNumAssignMasterStep())
+                .start(billOperNumAssignMasterStep(null))
                 .build();
     }
 
@@ -76,38 +77,37 @@ public class BillOperNumAssignJobConfig {
     }
 
     @Bean("billOperNumAssignPartitionHandler")
-    PartitionHandler billOperNumAssignPartitionHandler(@Value("${batch.thread-count:8}") Integer threadCount) {
+    PartitionHandler billOperNumAssignPartitionHandler(@Value("${batch.thread-count:8}") Integer threadCount,
+                                                       BillOperNumAssignStepListener billOperNumAssignStepListener) {
         TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
-        partitionHandler.setStep(billOperNumAssignWorkerStep());
+        partitionHandler.setStep(billOperNumAssignWorkerStep(billOperNumAssignStepListener));
         partitionHandler.setTaskExecutor(billOperNumAssignTaskExecutor(threadCount));
         partitionHandler.setGridSize(threadCount);
         return partitionHandler;
     }
 
     @Bean("billOperNumAssignMasterStep")
-    Step billOperNumAssignMasterStep() {
+    Step billOperNumAssignMasterStep(PartitionHandler billOperNumAssignPartitionHandler) {
         return new StepBuilder("billOperNumAssignMasterStep", jobRepository)
                 .partitioner("billOperNumAssignWorkerStep", billOperNumAssignPartitioner(null))
-                .partitionHandler(billOperNumAssignPartitionHandler(null))
+                .partitionHandler(billOperNumAssignPartitionHandler)
                 .build();
     }
 
     @Bean("billOperNumAssignWorkerStep")
-    Step billOperNumAssignWorkerStep() {
+    Step billOperNumAssignWorkerStep(BillOperNumAssignStepListener billOperNumAssignStepListener) {
         return new StepBuilder("billOperNumAssignWorkerStep", jobRepository)
                 .<InvObjAcnt, InvObjAcnt>chunk(CHUNK_SIZE, transactionManager)
                 .reader(billOperNumAssignItemReader(null, null, null))
                 .processor(billOperNumAssignProcessor)
                 .writer(billOperNumAssignItemWriter())
+                .listener(billOperNumAssignStepListener)
                 .build();
     }
 
     @Bean
     MyBatisBatchItemWriter<InvObjAcnt> billOperNumAssignItemWriter() {
-        return new MyBatisBatchItemWriterBuilder<InvObjAcnt>()
-                .sqlSessionFactory(sqlSessionFactory)
-                .statementId("me.realimpact.telecom.bill.prework.infrastructure.mapper.InvObjAcntMapper.updateInvObjAcnt")
-                .build();
+        return BillOperNumAssignItemWriter.newInstance(sqlSessionFactory);
     }
 
     @Bean
@@ -117,5 +117,10 @@ public class BillOperNumAssignJobConfig {
             @Value("#{stepExecutionContext['partitionKey']}") Integer partitionKey,
             @Value("#{stepExecutionContext['partitionCount']}") Integer partitionCount) {
         return BillOperNumAssignReader.newInstance(sqlSessionFactory, partitionKey, partitionCount, invOperCyclCd);
+    }
+
+    @Bean
+    BillOperNumAssignStepListener billOperNumAssignStepListener() {
+        return new BillOperNumAssignStepListener();
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {
         "me.realimpact.telecom.calculation",
         "me.realimpact.telecom.billing.batch",
-        "me.realimpact.telecom.billing.batch", // For reader, processor, writer, config
         "me.realimpact.telecom.bill.prework", // For domain, infrastructure, mapper
 })
 @MapperScan(basePackages = {
