@@ -32,6 +32,7 @@ import me.realimpact.telecom.billing.batch.bill.reader.prework.BillOperNumAssign
 import me.realimpact.telecom.billing.batch.bill.support.listener.BillOperNumAssignStepListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.DateRangeJobExecutionListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.LoggingJobExecutionListener;
+import me.realimpact.telecom.billing.batch.bill.support.listener.TotalBillOperNumAssignListener;
 import me.realimpact.telecom.billing.batch.bill.support.validator.DefaultJobParametersValidator;
 import me.realimpact.telecom.billing.batch.bill.writer.prework.BillOperNumAssignItemWriter;
 
@@ -49,12 +50,14 @@ public class BillOperNumAssignJobConfig {
     @Bean("billOperNumAssignJob")
     Job billOperNumAssignJob(DefaultJobParametersValidator defaultJobParametersValidator,
                              LoggingJobExecutionListener loggingJobExecutionListener,
-                             DateRangeJobExecutionListener dateRangeJobExecutionListener) {
+                             DateRangeJobExecutionListener dateRangeJobExecutionListener,
+                             TotalBillOperNumAssignListener totalBillOperNumAssignListener) {
         return new JobBuilder("billOperNumAssignJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .validator(defaultJobParametersValidator)
                 .listener(loggingJobExecutionListener)
                 .listener(dateRangeJobExecutionListener)
+                .listener(totalBillOperNumAssignListener)
                 .start(billOperNumAssignMasterStep(null))
                 .build();
     }
