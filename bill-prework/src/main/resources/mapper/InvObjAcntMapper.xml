@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.realimpact.telecom.bill.prework.infrastructure.mapper.InvObjAcntMapper">
+
+    <resultMap id="invObjAcntResultMap" type="me.realimpact.telecom.bill.prework.domain.InvObjAcnt">
+        <id property="acntNum" column="ACNT_NUM"/>
+        <result property="repSvcMgmtNum" column="REP_SVC_MGMT_NUM"/>
+        <result property="billOperNum" column="BILL_OPER_NUM"/>
+        <result property="billOperCyclCd" column="BILL_OPER_CYCL_CD"/>
+        <result property="payMthdCd" column="PAY_MTHD_CD"/>
+        <result property="billTypes" column="BILL_TYPES"/>
+    </resultMap>
+
+    <select id="findAllInvObjAcnt" parameterType="java.lang.String" resultMap="invObjAcntResultMap">
+        SELECT
+            ACNT_NUM,
+            REP_SVC_MGMT_NUM,
+            BILL_OPER_NUM,
+            BILL_OPER_CYCL_CD,
+            PAY_MTHD_CD,
+            BILL_TYPES
+        FROM INV_OBJ_ACNT
+            <if test="invOperCyclCd != null and invOperCyclCd != ''">
+                INV_OPER_CYCL_CD = #{invOperCyclCd}
+            </if>
+    </select>
+
+    <update id="updateInvObjAcnt" parameterType="me.realimpact.telecom.bill.prework.domain.InvObjAcnt">
+        UPDATE INV_OBJ_ACNT
+        SET
+            BILL_OPER_NUM = #{billOperNum},
+            BILL_OPER_CYCL_CD = #{billOperCyclCd}
+        WHERE
+            ACNT_NUM = #{acntNum}
+    </update>
+
+    <select id="findInvObjAcntByPartition" parameterType="java.util.Map" resultMap="invObjAcntResultMap">
+        SELECT
+            ACNT_NUM,
+            REP_SVC_MGMT_NUM,
+            BILL_OPER_NUM,
+            BILL_OPER_CYCL_CD,
+            PAY_MTHD_CD,
+            BILL_TYPES
+        FROM INV_OBJ_ACNT
+        <where>
+            MOD(ACNT_NUM, #{partitionCount}) = #{partitionKey}
+            <if test="invOperCyclCd != null and invOperCyclCd != ''">
+                AND INV_OPER_CYCL_CD = #{invOperCyclCd}
+            </if>
+        </where>
+        ORDER BY ACNT_NUM
+        OFFSET #{_skiprows} ROWS FETCH NEXT #{_pagesize} ROWS ONLY
+    </select>
+
+</mapper>

@@ -1,0 +1,10 @@
+dependencies {
+    implementation project(':bill-prework')
+
+    // MySQL connector for production
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    
+    // H2 database for testing (optional)
+    runtimeOnly 'com.h2database:h2'
+}
+

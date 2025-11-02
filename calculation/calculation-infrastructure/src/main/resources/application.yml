@@ -1,0 +1,9 @@
+billing:
+  vat:
+    vat-rate: 0.10
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    me.realimpact.telecom: INFO

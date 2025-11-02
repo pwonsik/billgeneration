@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/FREEPDB1
+    username: dev
+    password: secret
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 20   # 멀티쓰레드 처리를 위해 증가
+      minimum-idle: 8         # 최소 유지 커넥션 수 증가
+      connection-timeout: 60000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+mybatis:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #type-aliases-package: me.realimpact.telecom.calculation.infrastructure.dto
+  configuration:
+    map-underscore-to-camel-case: true
+    use-column-label: true
+    cache-enabled: false
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+logging:
+  level:
+    root: INFO
+    me.realimpact.telecom: INFO

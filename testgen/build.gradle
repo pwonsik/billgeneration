@@ -1,0 +1,10 @@
+
+jar {
+    enabled = false
+}
+
+bootJar {
+    enabled = true
+    archiveClassifier = ''
+    mainClass = 'me.realimpact.telecom.testgen.TestGenApplication'
+}
