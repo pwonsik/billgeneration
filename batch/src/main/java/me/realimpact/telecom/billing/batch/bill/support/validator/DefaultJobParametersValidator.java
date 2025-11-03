@@ -32,5 +32,17 @@ public class DefaultJobParametersValidator implements JobParametersValidator {
                 throw new JobParametersInvalidException("'invDt'가 유효한 날짜 형식이 아닙니다: " + invDt);
             }
         }
+        
+        String threadCount = parameters.getString("batch.thread-count");
+        if (StringUtils.hasText(threadCount)) {
+            try {
+                long count = Long.parseLong(threadCount);
+                if (count > 10) {
+                    throw new JobParametersInvalidException("'batch.thread-count'의 값은 10보다 커서는 안됩니다.");
+                }
+            } catch (NumberFormatException e) {
+                throw new JobParametersInvalidException("'batch.thread-count'는 숫자여야 합니다.");
+            }
+        }
     }
 }

@@ -35,6 +35,7 @@ import me.realimpact.telecom.billing.batch.bill.support.listener.LoggingJobExecu
 import me.realimpact.telecom.billing.batch.bill.support.listener.TotalBillOperNumAssignListener;
 import me.realimpact.telecom.billing.batch.bill.support.validator.DefaultJobParametersValidator;
 import me.realimpact.telecom.billing.batch.bill.writer.prework.BillOperNumAssignItemWriter;
+import me.realimpact.telecom.billing.batch.config.BatchProperties;
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,6 +47,7 @@ public class BillOperNumAssignJobConfig {
     private final PlatformTransactionManager transactionManager;
     private final SqlSessionFactory sqlSessionFactory;
     private final BillOperNumAssignProcessor billOperNumAssignProcessor;
+    private final BatchProperties batchProperties;
 
     @Bean("billOperNumAssignJob")
     Job billOperNumAssignJob(DefaultJobParametersValidator defaultJobParametersValidator,
@@ -63,7 +65,8 @@ public class BillOperNumAssignJobConfig {
     }
 
     @Bean("billOperNumAssignTaskExecutor")
-    TaskExecutor billOperNumAssignTaskExecutor(@Value("${batch.thread-count:8}") Integer threadCount) {
+    TaskExecutor billOperNumAssignTaskExecutor() {
+        Integer threadCount = batchProperties.getThreadCount();
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(threadCount);
         executor.setMaxPoolSize(threadCount);
@@ -80,11 +83,11 @@ public class BillOperNumAssignJobConfig {
     }
 
     @Bean("billOperNumAssignPartitionHandler")
-    PartitionHandler billOperNumAssignPartitionHandler(@Value("${batch.thread-count:8}") Integer threadCount,
-                                                       BillOperNumAssignStepListener billOperNumAssignStepListener) {
+    PartitionHandler billOperNumAssignPartitionHandler(BillOperNumAssignStepListener billOperNumAssignStepListener) {
+        Integer threadCount = batchProperties.getThreadCount();
         TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
         partitionHandler.setStep(billOperNumAssignWorkerStep(billOperNumAssignStepListener));
-        partitionHandler.setTaskExecutor(billOperNumAssignTaskExecutor(threadCount));
+        partitionHandler.setTaskExecutor(billOperNumAssignTaskExecutor());
         partitionHandler.setGridSize(threadCount);
         return partitionHandler;
     }
