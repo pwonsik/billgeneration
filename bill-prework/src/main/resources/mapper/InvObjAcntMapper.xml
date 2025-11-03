@@ -51,7 +51,6 @@
             </if>
         </where>
         ORDER BY ACNT_NUM
-        OFFSET #{_skiprows} ROWS FETCH NEXT #{_pagesize} ROWS ONLY
     </select>
 
 </mapper>

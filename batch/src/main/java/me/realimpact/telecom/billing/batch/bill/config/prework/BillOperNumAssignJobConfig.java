@@ -4,7 +4,7 @@ import static me.realimpact.telecom.billing.batch.constant.BatchConstants.CHUNK_
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
-import org.mybatis.spring.batch.MyBatisPagingItemReader;
+import org.mybatis.spring.batch.MyBatisCursorItemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -118,7 +118,7 @@ public class BillOperNumAssignJobConfig {
 
     @Bean
     @StepScope
-    MyBatisPagingItemReader<InvObjAcnt> billOperNumAssignItemReader(
+    MyBatisCursorItemReader<InvObjAcnt> billOperNumAssignItemReader(
             @Value("#{stepExecutionContext['invOperCyclCd']}") String invOperCyclCd,
             @Value("#{stepExecutionContext['partitionKey']}") Integer partitionKey,
             @Value("#{stepExecutionContext['partitionCount']}") Integer partitionCount) {
