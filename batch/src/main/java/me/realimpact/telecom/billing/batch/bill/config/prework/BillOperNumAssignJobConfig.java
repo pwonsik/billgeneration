@@ -23,12 +23,15 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.bill.prework.domain.InvObjAcnt;
 import me.realimpact.telecom.billing.batch.bill.partitioner.prework.BillOperNumAssignPartitioner;
 import me.realimpact.telecom.billing.batch.bill.processor.prework.BillOperNumAssignProcessor;
-import me.realimpact.telecom.billing.batch.bill.reader.prework.BillOperNumAssignReader;
+import me.realimpact.telecom.billing.batch.common.reader.GenericPartitionedCursorReader;
 import me.realimpact.telecom.billing.batch.bill.support.listener.BillOperNumAssignStepListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.DateRangeJobExecutionListener;
 import me.realimpact.telecom.billing.batch.bill.support.listener.LoggingJobExecutionListener;
@@ -122,7 +125,14 @@ public class BillOperNumAssignJobConfig {
             @Value("#{stepExecutionContext['invOperCyclCd']}") String invOperCyclCd,
             @Value("#{stepExecutionContext['partitionKey']}") Integer partitionKey,
             @Value("#{stepExecutionContext['partitionCount']}") Integer partitionCount) {
-        return new BillOperNumAssignReader(sqlSessionFactory, partitionKey, partitionCount, invOperCyclCd);
+
+        String queryId = "me.realimpact.telecom.bill.prework.infrastructure.mapper.InvObjAcntMapper.findInvObjAcntByPartition";
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("partitionKey", partitionKey);
+        parameters.put("partitionCount", partitionCount);
+        parameters.put("invOperCyclCd", invOperCyclCd);
+
+        return new GenericPartitionedCursorReader<>(sqlSessionFactory, queryId, parameters);
     }
 
     @Bean
