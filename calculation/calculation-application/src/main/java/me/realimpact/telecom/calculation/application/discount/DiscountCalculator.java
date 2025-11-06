@@ -11,9 +11,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,42 +36,49 @@ public class DiscountCalculator {
         );
     }
 
-    public List<? extends CalculationResult<?>> process(CalculationContext ctx,
-                                              List<? extends CalculationResult<?>> proratedCalculationResultsBeforeDiscount,
+    public List<CalculationResult<?>> process(CalculationContext ctx,
+                                              List<CalculationResult<?>> proratedCalculationResults,
                                               List<Discount> discounts) {
-        List<CalculationResult<?>> results = new ArrayList<>();
-        // ContractDiscount의 각 Discount에 대해 CalculationResult 생성
-        for (Discount discount : discounts) {
-            for (CalculationResult<?> befDcCalResult : proratedCalculationResultsBeforeDiscount) {
-                if (!discount.isDiscountTarget(befDcCalResult)) {
-                    continue;
-                }
-                BigDecimal discountAmount = discount.calculateDiscount(befDcCalResult);
-                if (discountAmount.equals(BigDecimal.ZERO)) {
-                    continue;
-                }
-                // 잔액 차감
-                befDcCalResult.debitBalance(discountAmount);
+        return discounts.stream()
+                .flatMap(discount -> proratedCalculationResults.stream()
+                        .map(calcResult -> applyDiscountToResult(discount, calcResult))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                )
+                .collect(Collectors.toList());
+    }
 
-                CalculationResult<?> discountResult = new CalculationResult<>(
-                        befDcCalResult.getContractId(),
-                        befDcCalResult.getBillingStartDate(),
-                        befDcCalResult.getBillingEndDate(),
-                        befDcCalResult.getProductOfferingId(),
-                        "DC",   // 임시
-                        "DC",  // 임시
-                        befDcCalResult.getEffectiveStartDate(),
-                        befDcCalResult.getEffectiveEndDate(),
-                        befDcCalResult.getSuspensionType(),
-                        discountAmount.negate(),
-                        BigDecimal.ZERO,
-                        discount,
-                        this::post
-                );
-                results.add(discountResult);
-            }
+    private Optional<CalculationResult<?>> applyDiscountToResult(Discount discount, CalculationResult<?> calcResult) {
+        if (!discount.isDiscountTarget(calcResult)) {
+            return Optional.empty();
         }
-        return results;
+
+        BigDecimal discountAmount = discount.calculateDiscount(calcResult);
+        // 할인액이 0보다 클 때만 처리
+        if (discountAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return Optional.empty();
+        }
+
+        // 부수 효과(Side effect): 원본 계산 결과의 잔액을 차감합니다.
+        // 이 로직은 현재 파이프라인 구조에서 허용된 방식으로 동작합니다.
+        calcResult.debitBalance(discountAmount);
+
+        CalculationResult<?> discountResult = new CalculationResult<>(
+                calcResult.getContractId(),
+                calcResult.getBillingStartDate(),
+                calcResult.getBillingEndDate(),
+                calcResult.getProductOfferingId(),
+                "DC",   // 임시
+                "DC",  // 임시
+                calcResult.getEffectiveStartDate(),
+                calcResult.getEffectiveEndDate(),
+                calcResult.getSuspensionType(),
+                discountAmount.negate(),
+                BigDecimal.ZERO,
+                discount,
+                this::post
+        );
+        return Optional.of(discountResult);
     }
 
 
