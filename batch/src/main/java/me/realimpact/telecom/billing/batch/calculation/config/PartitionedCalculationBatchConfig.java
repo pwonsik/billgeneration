@@ -12,6 +12,7 @@ import me.realimpact.telecom.calculation.domain.BillingCalculationPeriod;
 import me.realimpact.telecom.calculation.domain.BillingCalculationType;
 import me.realimpact.telecom.calculation.api.CalculationResultGroup;
 import me.realimpact.telecom.calculation.application.CalculationCommandService;
+import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
 import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.port.out.CalculationResultSavePort;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -57,6 +58,7 @@ public class PartitionedCalculationBatchConfig {
     private final PlatformTransactionManager transactionManager;
 
     private final CalculationCommandService calculationCommandService;
+    private final CalculationTargetQueryService calculationTargetQueryService;
     private final CalculationResultSavePort calculationResultSavePort;
 
     /**
@@ -157,7 +159,7 @@ public class PartitionedCalculationBatchConfig {
         );
 
         PartitionedContractReader reader = new PartitionedContractReader(
-                calculationCommandService,
+                calculationTargetQueryService,
                 sqlSessionFactory,
                 params,
                 partitionKey,

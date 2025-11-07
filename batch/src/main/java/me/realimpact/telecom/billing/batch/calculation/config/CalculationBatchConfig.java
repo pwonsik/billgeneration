@@ -9,6 +9,7 @@ import me.realimpact.telecom.billing.batch.calculation.tasklet.CalculationResult
 import me.realimpact.telecom.billing.batch.calculation.writer.CalculationWriter;
 import me.realimpact.telecom.calculation.api.CalculationResultGroup;
 import me.realimpact.telecom.calculation.application.CalculationCommandService;
+import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
 import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.BillingCalculationPeriod;
 import me.realimpact.telecom.calculation.domain.BillingCalculationType;
@@ -51,6 +52,7 @@ public class CalculationBatchConfig {
     private final PlatformTransactionManager transactionManager;
 
     private final CalculationCommandService calculationCommandService;
+    private final CalculationTargetQueryService calculationTargetQueryService;
 
     private final CalculationResultSavePort calculationResultSavePort;
 
@@ -138,7 +140,7 @@ public class CalculationBatchConfig {
         );
 
         ChunkedContractReader reader = new ChunkedContractReader(
-                calculationCommandService,
+                calculationTargetQueryService,
                 sqlSessionFactory,
                 params
         );

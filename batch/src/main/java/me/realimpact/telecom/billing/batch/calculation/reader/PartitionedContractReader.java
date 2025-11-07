@@ -2,7 +2,7 @@ package me.realimpact.telecom.billing.batch.calculation.reader;
 
 import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.billing.batch.calculation.CalculationParameters;
-import me.realimpact.telecom.calculation.application.CalculationCommandService;
+import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
 import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.CalculationContext;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,7 +24,7 @@ import java.util.*;
 @Slf4j
 public class PartitionedContractReader implements ItemStreamReader<CalculationTarget> {
 
-    private final CalculationCommandService calculationCommandService;
+    private final CalculationTargetQueryService calculationTargetQueryService;
     private final SqlSessionFactory sqlSessionFactory;
     private final CalculationParameters calculationParameters;
     private final Integer partitionKey;
@@ -37,12 +37,12 @@ public class PartitionedContractReader implements ItemStreamReader<CalculationTa
     private boolean initialized = false;
 
     public PartitionedContractReader(
-            CalculationCommandService calculationCommandService,
+            CalculationTargetQueryService calculationTargetQueryService,
             SqlSessionFactory sqlSessionFactory,
             CalculationParameters calculationParameters,
             Integer partitionKey,
             Integer partitionCount) {
-        this.calculationCommandService = calculationCommandService;
+        this.calculationTargetQueryService = calculationTargetQueryService;
         this.sqlSessionFactory = sqlSessionFactory;
         this.calculationParameters = calculationParameters;
         this.partitionKey = partitionKey;
@@ -191,6 +191,6 @@ public class PartitionedContractReader implements ItemStreamReader<CalculationTa
 
     private List<CalculationTarget> getCalculationTargets(List<Long> contractIds) {
         CalculationContext ctx = calculationParameters.toCalculationContext();
-        return calculationCommandService.loadCalculationTargets(contractIds, ctx);
+        return calculationTargetQueryService.loadCalculationTargets(contractIds, ctx);
     }
 }

@@ -16,12 +16,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class CalculationCommandService implements CalculationCommandUseCase {
-    private final CalculationTargetLoader targetLoader;
+    private final CalculationTargetQueryService queryService;
     private final DefaultCalculationPipeline pipeline;
-
-    public List<CalculationTarget> loadCalculationTargets(List<Long> contractIds, CalculationContext ctx) {
-        return targetLoader.load(contractIds, ctx);
-    }
 
     public CalculationResultGroup processCalculation(CalculationTarget calculationTarget, CalculationContext ctx) {
         log.debug("Processing contract calculation for contractId: {}", calculationTarget.contractId());
@@ -47,7 +43,7 @@ public class CalculationCommandService implements CalculationCommandUseCase {
 
     @Override
     public List<CalculationResultGroup> calculate(List<Long> contractIds, CalculationContext ctx) {
-        return loadCalculationTargets(contractIds, ctx).stream()
+        return queryService.loadCalculationTargets(contractIds, ctx).stream()
                 .map(calculationTarget -> processCalculation(calculationTarget, ctx))
                 .toList();
     }
