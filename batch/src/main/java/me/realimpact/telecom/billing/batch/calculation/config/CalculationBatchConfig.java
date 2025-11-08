@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.billing.batch.calculation.CalculationParameters;
 import me.realimpact.telecom.billing.batch.calculation.processor.CalculationProcessor;
-import me.realimpact.telecom.billing.batch.calculation.reader.ChunkedContractReader;
 import me.realimpact.telecom.billing.batch.calculation.tasklet.CalculationResultCleanupTasklet;
 import me.realimpact.telecom.billing.batch.calculation.writer.CalculationWriter;
+import me.realimpact.telecom.billing.batch.common.pipeline.CalculationTargetPipeline;
+import me.realimpact.telecom.billing.batch.common.reader.UniversalChunkedReader;
 import me.realimpact.telecom.calculation.api.CalculationResultGroup;
 import me.realimpact.telecom.calculation.application.CalculationCommandService;
-import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
-import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.BillingCalculationPeriod;
 import me.realimpact.telecom.calculation.domain.BillingCalculationType;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import me.realimpact.telecom.calculation.port.out.CalculationResultSavePort;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
@@ -21,6 +21,7 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.SynchronizedItemStreamReader;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,8 +53,7 @@ public class CalculationBatchConfig {
     private final PlatformTransactionManager transactionManager;
 
     private final CalculationCommandService calculationCommandService;
-    private final CalculationTargetQueryService calculationTargetQueryService;
-
+    private final CalculationTargetPipeline calculationTargetPipeline;
     private final CalculationResultSavePort calculationResultSavePort;
 
     /**
@@ -122,14 +122,13 @@ public class CalculationBatchConfig {
      * contractId가 있으면 단건, 없으면 전체 조회
      */
     @Bean
-    ChunkedContractReader chunkedContractReader(
+    ItemStreamReader<CalculationTarget> chunkedContractReader(
             @Value("${billingStartDate}") String billingStartDateStr,
             @Value("${billingEndDate}") String billingEndDateStr,
             @Value("${contractIds:}") String contractIdsStr,
             @Value("${batch.thread-count}") Integer threadCount,
             @Value("${billingCalculationType}") String billingCalculationTypeStr,
-            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr,
-            CalculationCommandService calculationCommandService
+            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr
     ) {
         log.info("=== ChunkedContractReader Bean 생성 시작 === billingStartDate: {}, billingEndDate: {}, threadCount: {}",
                 billingStartDateStr, billingEndDateStr, threadCount);
@@ -139,13 +138,14 @@ public class CalculationBatchConfig {
                 threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
         );
 
-        ChunkedContractReader reader = new ChunkedContractReader(
-                calculationTargetQueryService,
+        // 범용 청크 리더 생성 - CalculationTarget 타입으로 변환하는 파이프라인 사용
+        UniversalChunkedReader<CalculationTarget> reader = new UniversalChunkedReader<>(
+                calculationTargetPipeline,  // Contract ID → CalculationTarget 변환
                 sqlSessionFactory,
                 params
         );
 
-        log.info("=== ChunkedContractReader Bean 생성 완료 ===");
+        log.info("=== UniversalChunkedReader<CalculationTarget> Bean 생성 완료 ===");
         return reader;
     }
     
@@ -170,8 +170,7 @@ public class CalculationBatchConfig {
         reader.setDelegate(
                 chunkedContractReader(
                         billingStartDateStr, billingEndDateStr, contractIdsStr,
-                        threadCount, billingCalculationTypeStr, billingCalculationPeriodStr,
-                        calculationCommandService
+                        threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
                 )
         );
 

@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.billing.batch.calculation.CalculationParameters;
 import me.realimpact.telecom.calculation.api.CalculationResultGroup;
 import me.realimpact.telecom.calculation.application.CalculationCommandService;
-import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.CalculationContext;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import org.springframework.batch.item.ItemProcessor;
 
 /**

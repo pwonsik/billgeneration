@@ -1,4 +1,4 @@
-package me.realimpact.telecom.calculation.application;
+package me.realimpact.telecom.calculation.domain;
 
 import me.realimpact.telecom.calculation.domain.discount.Discount;
 import me.realimpact.telecom.calculation.domain.monthlyfee.MonthlyChargeDomain;

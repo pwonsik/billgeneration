@@ -5,15 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.billing.batch.calculation.CalculationParameters;
 import me.realimpact.telecom.billing.batch.calculation.partitioner.ContractPartitioner;
 import me.realimpact.telecom.billing.batch.calculation.processor.CalculationProcessor;
-import me.realimpact.telecom.billing.batch.calculation.reader.PartitionedContractReader;
 import me.realimpact.telecom.billing.batch.calculation.tasklet.CalculationResultCleanupTasklet;
 import me.realimpact.telecom.billing.batch.calculation.writer.CalculationWriter;
-import me.realimpact.telecom.calculation.domain.BillingCalculationPeriod;
-import me.realimpact.telecom.calculation.domain.BillingCalculationType;
+import me.realimpact.telecom.billing.batch.common.pipeline.CalculationTargetPipeline;
+import me.realimpact.telecom.billing.batch.common.reader.UniversalPartitionedReader;
 import me.realimpact.telecom.calculation.api.CalculationResultGroup;
 import me.realimpact.telecom.calculation.application.CalculationCommandService;
-import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
-import me.realimpact.telecom.calculation.application.CalculationTarget;
+import me.realimpact.telecom.calculation.domain.BillingCalculationPeriod;
+import me.realimpact.telecom.calculation.domain.BillingCalculationType;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import me.realimpact.telecom.calculation.port.out.CalculationResultSavePort;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
@@ -58,8 +58,10 @@ public class PartitionedCalculationBatchConfig {
     private final PlatformTransactionManager transactionManager;
 
     private final CalculationCommandService calculationCommandService;
-    private final CalculationTargetQueryService calculationTargetQueryService;
     private final CalculationResultSavePort calculationResultSavePort;
+    
+    // 범용 리더를 위한 파이프라인
+    private final CalculationTargetPipeline calculationTargetPipeline;
 
     /**
      * Helper method to create CalculationParameters from individual parameters
@@ -158,15 +160,16 @@ public class PartitionedCalculationBatchConfig {
                 threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
         );
 
-        PartitionedContractReader reader = new PartitionedContractReader(
-                calculationTargetQueryService,
+        // 범용 파티션 리더 생성 - CalculationTarget 타입으로 변환하는 파이프라인 사용
+        UniversalPartitionedReader<CalculationTarget> reader = new UniversalPartitionedReader<>(
+                calculationTargetPipeline,  // Contract ID → CalculationTarget 변환
                 sqlSessionFactory,
                 params,
                 partitionKey,
                 partitionCount
         );
 
-        log.info("=== PartitionedContractReader Bean 생성 완료 ===");
+        log.info("=== UniversalPartitionedReader<CalculationTarget> Bean 생성 완료 ===");
         return reader;
     }
 

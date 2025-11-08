@@ -3,8 +3,8 @@ package me.realimpact.telecom.billing.batch.calculation.reader;
 import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.billing.batch.calculation.CalculationParameters;
 import me.realimpact.telecom.calculation.application.CalculationTargetQueryService;
-import me.realimpact.telecom.calculation.application.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.CalculationContext;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisCursorItemReader;
 import org.springframework.batch.item.ExecutionContext;
@@ -19,7 +19,10 @@ import java.util.*;
 /**
  * 청크 기반 계약 Reader (ItemStreamReader 구현)
  * Spring Batch의 정상적인 라이프사이클을 따라 안정적인 chunk 처리
+ * 
+ * @deprecated 파이프라인 패턴을 사용하는 {@link me.realimpact.telecom.billing.batch.common.reader.UniversalChunkedReader}로 대체되었습니다.
  */
+@Deprecated
 @Slf4j
 public class ChunkedContractReader implements ItemStreamReader<CalculationTarget> {
 

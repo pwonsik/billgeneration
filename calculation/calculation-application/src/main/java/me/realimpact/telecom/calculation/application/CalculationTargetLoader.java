@@ -5,6 +5,7 @@ import me.realimpact.telecom.calculation.application.discount.DiscountCalculator
 import me.realimpact.telecom.calculation.application.monthlyfee.MonthlyFeeDataLoader;
 import me.realimpact.telecom.calculation.application.onetimecharge.OneTimeChargeDataLoader;
 import me.realimpact.telecom.calculation.domain.CalculationContext;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import me.realimpact.telecom.calculation.domain.discount.ContractDiscounts;
 import me.realimpact.telecom.calculation.domain.monthlyfee.MonthlyChargeDomain;
 import me.realimpact.telecom.calculation.domain.onetimecharge.OneTimeChargeDomain;

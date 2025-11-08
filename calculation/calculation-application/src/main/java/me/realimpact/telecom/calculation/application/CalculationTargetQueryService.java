@@ -3,6 +3,7 @@ package me.realimpact.telecom.calculation.application;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.realimpact.telecom.calculation.domain.CalculationContext;
+import me.realimpact.telecom.calculation.domain.CalculationTarget;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
