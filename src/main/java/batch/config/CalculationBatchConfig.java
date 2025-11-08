@@ -1,0 +1,268 @@
+package batch.config;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemStreamReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.SynchronizedItemStreamReader;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.*;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import batch.BillParameters;
+import batch.common.pipeline.CalculationTargetPipeline;
+import batch.common.reader.UniversalChunkedReader;
+import batch.processor.CalculationProcessor;
+import batch.tasklet.CalculationResultCleanupTasklet;
+import batch.writer.CalculationWriter;
+import bill.api.CalculationResultGroup;
+import bill.application.CalculationCommandService;
+import bill.domain.BillingCalculationPeriod;
+import bill.domain.BillingCalculationType;
+import bill.domain.CalculationTarget;
+import bill.port.out.CalculationResultSavePort;
+
+import static batch.common.constant.BatchConstants.CHUNK_SIZE;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Spring Batch 설정 예제
+ * MyBatisPagingItemReader를 사용한 대용량 계약 데이터 처리
+ */
+@Configuration
+@RequiredArgsConstructor
+//@MapperScan("me.realimpact.telecom.calculation.infrastructure.adapter")
+@ConditionalOnProperty(name = "spring.batch.job.names", havingValue = "monthlyFeeCalculationJob")
+@Slf4j
+public class CalculationBatchConfig {
+
+    private final SqlSessionFactory sqlSessionFactory;
+    private final JobRepository jobRepository;
+    private final PlatformTransactionManager transactionManager;
+
+    private final CalculationCommandService calculationCommandService;
+    private final CalculationTargetPipeline calculationTargetPipeline;
+    private final CalculationResultSavePort calculationResultSavePort;
+
+    /**
+     * Helper method to create CalculationParameters from individual parameters
+     */
+    private BillParameters createCalculationParameters(
+            String billingStartDateStr,
+            String billingEndDateStr,
+            String contractIdsStr,
+            Integer threadCount,
+            String billingCalculationTypeStr,
+            String billingCalculationPeriodStr
+    ) {
+        LocalDate billingStartDate = LocalDate.parse(billingStartDateStr);
+        LocalDate billingEndDate = LocalDate.parse(billingEndDateStr);
+
+        List<Long> contractIds = contractIdsStr == null || contractIdsStr.trim().isEmpty()
+            ? List.of()
+            : Arrays.stream(contractIdsStr.split(","))
+                .map(String::trim)
+                .map(Long::parseLong)
+                .toList();
+
+        BillingCalculationType billingCalculationType = BillingCalculationType.fromCode(billingCalculationTypeStr);
+        BillingCalculationPeriod billingCalculationPeriod = BillingCalculationPeriod.fromCode(billingCalculationPeriodStr);
+
+        return new BillParameters(
+            billingStartDate,
+            billingEndDate,
+            billingCalculationType,
+            billingCalculationPeriod,
+            threadCount,
+            contractIds
+        );
+    }
+
+    /**
+     * 멀티쓰레드 처리를 위한 TaskExecutor 설정
+     */
+    @Bean
+    TaskExecutor taskExecutor(
+            @Value("${batch.thread-count:8}") Integer threadCount
+    ) {
+        log.info("=== TaskExecutor Bean 생성 시작 ===  threadCount: {}", threadCount);
+        int maxThreadCount = threadCount * 2;
+
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(threadCount);        // Application Property로 받은 쓰레드 수
+        executor.setMaxPoolSize(maxThreadCount);     // 최대 쓰레드 수
+        executor.setQueueCapacity(1000);               // 대기 큐 크기
+        executor.setThreadNamePrefix("batch-");
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.setAwaitTerminationSeconds(10);
+        executor.initialize();
+
+        log.info("=== TaskExecutor Bean 생성 완료 ===");
+        log.info("쓰레드 수: {}", threadCount);
+        log.info("최대 쓰레드 수: {}", maxThreadCount);
+
+        return executor;
+    }
+
+    /**
+     * ChunkedContractReader 설정 (Step Parameter 기반)
+     * chunk size만큼 contract ID를 읽어서 bulk 조회로 ContractDto 생성
+     * contractId가 있으면 단건, 없으면 전체 조회
+     */
+    @Bean
+    ItemStreamReader<CalculationTarget> chunkedContractReader(
+            @Value("${billingStartDate}") String billingStartDateStr,
+            @Value("${billingEndDate}") String billingEndDateStr,
+            @Value("${contractIds:}") String contractIdsStr,
+            @Value("${batch.thread-count}") Integer threadCount,
+            @Value("${billingCalculationType}") String billingCalculationTypeStr,
+            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr
+    ) {
+        log.info("=== ChunkedContractReader Bean 생성 시작 === billingStartDate: {}, billingEndDate: {}, threadCount: {}",
+                billingStartDateStr, billingEndDateStr, threadCount);
+
+        BillParameters params = createCalculationParameters(
+                billingStartDateStr, billingEndDateStr, contractIdsStr,
+                threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
+        );
+
+        // 범용 청크 리더 생성 - CalculationTarget 타입으로 변환하는 파이프라인 사용
+        UniversalChunkedReader<CalculationTarget> reader = new UniversalChunkedReader<>(
+                calculationTargetPipeline,  // Contract ID → CalculationTarget 변환
+                sqlSessionFactory,
+                params
+        );
+
+        log.info("=== UniversalChunkedReader<CalculationTarget> Bean 생성 완료 ===");
+        return reader;
+    }
+    
+    /**
+     * 멀티쓰레드 환경용 Thread-Safe Reader
+     */
+    @Bean
+    SynchronizedItemStreamReader<CalculationTarget> contractReader(
+            @Value("${billingStartDate}") String billingStartDateStr,
+            @Value("${billingEndDate}") String billingEndDateStr,
+            @Value("${contractIds:}") String contractIdsStr,
+            @Value("${batch.thread-count}") Integer threadCount,
+            @Value("${billingCalculationType}") String billingCalculationTypeStr,
+            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr,
+            CalculationCommandService calculationCommandService
+    ) {
+        log.info("=== SynchronizedItemStreamReader Bean 생성 시작 === billingStartDate: {}, threadCount: {}",
+                billingStartDateStr, threadCount);
+
+        SynchronizedItemStreamReader<CalculationTarget> reader = new SynchronizedItemStreamReader<>();
+
+        reader.setDelegate(
+                chunkedContractReader(
+                        billingStartDateStr, billingEndDateStr, contractIdsStr,
+                        threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
+                )
+        );
+
+        log.info("=== SynchronizedItemStreamReader Bean 생성 완료 ===");
+        return reader;
+    }
+
+    @Bean
+    ItemProcessor<CalculationTarget, CalculationResultGroup> calculationProcessor(
+            @Value("${billingStartDate}") String billingStartDateStr,
+            @Value("${billingEndDate}") String billingEndDateStr,
+            @Value("${contractIds:}") String contractIdsStr,
+            @Value("${batch.thread-count}") Integer threadCount,
+            @Value("${billingCalculationType}") String billingCalculationTypeStr,
+            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr
+    ) {
+        log.info("=== CalculationProcessor Bean 생성 시작 === billingStartDate: {}, threadCount: {}",
+                billingStartDateStr, threadCount);
+
+        BillParameters params = createCalculationParameters(
+                billingStartDateStr, billingEndDateStr, contractIdsStr,
+                threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
+        );
+
+        CalculationProcessor processor = new CalculationProcessor(calculationCommandService, params);
+        log.info("=== CalculationProcessor Bean 생성 완료 ===");
+
+        return processor;
+    }
+
+    /**
+     * Writer Bean 설정 (@StepScope) - 커스텀 Writer 사용
+     */
+    @Bean
+    ItemWriter<CalculationResultGroup> calculationWriter(
+            @Value("${billingStartDate}") String billingStartDateStr,
+            @Value("${billingEndDate}") String billingEndDateStr,
+            @Value("${contractIds:}") String contractIdsStr,
+            @Value("${batch.thread-count}") Integer threadCount,
+            @Value("${billingCalculationType}") String billingCalculationTypeStr,
+            @Value("${billingCalculationPeriod}") String billingCalculationPeriodStr
+    ) {
+        log.info("=== CalculationWriter Bean 생성 시작 === billingStartDate: {}, threadCount: {}",
+                billingStartDateStr, threadCount);
+
+        BillParameters params = createCalculationParameters(
+                billingStartDateStr, billingEndDateStr, contractIdsStr,
+                threadCount, billingCalculationTypeStr, billingCalculationPeriodStr
+        );
+
+        CalculationWriter writer = new CalculationWriter(calculationResultSavePort, params);
+        log.info("=== CalculationWriter Bean 생성 완료 ===");
+
+        return writer;
+    }
+
+
+    /**
+     * Cleanup Step 설정 - 기존 계산 결과 삭제
+     */
+    @Bean
+    Step cleanupCalculationResultStep(CalculationResultCleanupTasklet calculationResultCleanupTasklet) {
+        return new StepBuilder("cleanupCalculationResultStep", jobRepository)
+                .tasklet(calculationResultCleanupTasklet, transactionManager)
+                .build();
+    }
+
+    /**
+     * Step 설정 - 멀티쓰레드 처리로 성능 최적화
+     */
+    @Bean
+    Step monthlyFeeCalculationStep() {
+        return new StepBuilder("monthlyFeeCalculationStep", jobRepository)
+                .<CalculationTarget, CalculationResultGroup>chunk(CHUNK_SIZE, transactionManager)  // 상수화된 chunk size 사용
+                .reader(contractReader(null, null, null, null, null, null, null))  // Thread-Safe Reader 사용
+                .processor(calculationProcessor(null, null, null, null, null, null))  // @JobScope Processor 사용
+                .writer(calculationWriter(null, null, null, null, null, null))        // @JobScope Writer 사용
+                .taskExecutor(taskExecutor(null))             // 멀티쓰레드 실행 (@JobScope가 런타임에 실제 값 주입)
+                .build();
+    }
+
+    /**
+     * Job 설정 - 삭제 Step 후 계산 Step 순서로 실행
+     */
+    @Bean
+    Job monthlyFeeCalculationJob(CalculationResultCleanupTasklet calculationResultCleanupTasklet) {
+        return new JobBuilder("monthlyFeeCalculationJob", jobRepository)
+                .start(cleanupCalculationResultStep(calculationResultCleanupTasklet))     // 1. 기존 결과 삭제
+                .next(monthlyFeeCalculationStep())         // 2. 새로운 계산 수행
+                .build();
+    }
+
+}

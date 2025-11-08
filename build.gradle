@@ -1,122 +1,111 @@
-
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.7' apply false
-    id 'io.spring.dependency-management' version '1.1.4' apply false
+    id 'org.springframework.boot' version '3.5.7'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'eclipse'
 }
 
-allprojects {
-    apply plugin: 'eclipse'
+group = 'me.realimpact.telecom.billing'
+version = '0.0.1-SNAPSHOT'
 
-    group = 'me.realimpact.telecom.billing'
-    version = '0.0.1-SNAPSHOT'
-
-    repositories {
-        mavenCentral()
-    }
-
-    tasks.withType(JavaCompile) {
-        options.compilerArgs += ["-Xlint:all,-processing"]
-    }
-
-    task printJavaVersion {
-        doLast {
-            println "Java Version used by Gradle: ${System.getProperty('java.version')}"
-            println "Java Home used by Gradle: ${System.getProperty('java.home')}"
-        }
-    }
-}
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
-
+java {
     sourceCompatibility = '21'
+}
 
-    compileJava.options.encoding = 'UTF-8'
-    compileTestJava.options.encoding = 'UTF-8'
+repositories {
+    mavenCentral()
+}
 
-    tasks.named('eclipseJdt').configure {
-        doLast {
-            def jdtFile = file('.settings/org.eclipse.jdt.core.prefs')
-            if (!jdtFile.exists()) {
-                jdtFile.parentFile.mkdirs()
-                jdtFile.createNewFile()
-            }
-            jdtFile.append('\norg.eclipse.jdt.core.encoding=UTF-8\n')
-        }
-    }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
-
-    dependencies {
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    }
-
-    test {
-        useJUnitPlatform()
-        systemProperties = System.getProperties()
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
 
-project(':web-service') {
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
-        // Calculation modules
-        implementation project(':calculation:calculation-domain')
-        implementation project(':calculation:calculation-api')
-        implementation project(':calculation:calculation-port')
-        implementation project(':calculation:calculation-application')
-        implementation project(':calculation:calculation-infrastructure')
-
-        // Policy modules (runtime implementation)
-        implementation project(':calculation-policy-onetimecharge')
-        implementation project(':calculation-policy-monthlyfee')
-    }
+dependencies {
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // MyBatis
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    
+    // Swagger/OpenAPI
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    
+    // Jakarta & Spring
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'jakarta.annotation:jakarta.annotation-api'
+    implementation 'org.springframework:spring-context'
+    
+    // SLF4J
+    implementation 'org.slf4j:slf4j-api'
+    
+    // Database
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
+    
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    // Test dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+    testImplementation 'org.mockito:mockito-core'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-project(':batch') {
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-batch'
-        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-
-        // Calculation modules
-        implementation project(':calculation:calculation-domain')
-        implementation project(':calculation:calculation-api')
-        implementation project(':calculation:calculation-port')
-        implementation project(':calculation:calculation-application')
-        implementation project(':calculation:calculation-infrastructure')
-
-        // Policy modules (runtime implementation)
-        implementation project(':calculation-policy-onetimecharge')
-        implementation project(':calculation-policy-monthlyfee')
-
-        runtimeOnly 'com.mysql:mysql-connector-j'
-    }
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
-project(':testgen') {
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-        runtimeOnly 'com.mysql:mysql-connector-j'
-        implementation('com.github.javafaker:javafaker:1.0.2') {
-            exclude group: 'org.yaml', module: 'snakeyaml'
-        }
-    }
+// Disable resolveMainClassName since we have custom bootJar tasks
+tasks.named('resolveMainClassName') {
+    enabled = false
 }
 
+// Disable default bootJar to handle multiple main classes
+bootJar {
+    enabled = false
+}
 
+// Batch application JAR
+task bootJarBatch(type: org.springframework.boot.gradle.tasks.bundling.BootJar) {
+    mainClass = 'batch.BatchApplication'
+    archiveFileName = 'billing-batch.jar'
+    classpath = sourceSets.main.runtimeClasspath
+    targetJavaVersion = JavaVersion.VERSION_21
+}
+
+// Web service application JAR
+task bootJarWeb(type: org.springframework.boot.gradle.tasks.bundling.BootJar) {
+    mainClass = 'web.WebServiceApplication'
+    archiveFileName = 'billing-web.jar'
+    classpath = sourceSets.main.runtimeClasspath
+    targetJavaVersion = JavaVersion.VERSION_21
+}
+
+// Make build depend on both JAR tasks
+build.dependsOn bootJarBatch, bootJarWeb
+
+// Configure encoding
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// Eclipse configuration
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+}

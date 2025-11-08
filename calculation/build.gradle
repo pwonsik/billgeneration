@@ -1,3 +1,0 @@
-// Calculation parent module - aggregates all calculation submodules
-bootJar { enabled = false }
-jar { enabled = false }

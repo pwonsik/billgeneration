@@ -1,5 +1,0 @@
-dependencies {
-    // In the root build.gradle, dependencies for web-service module are already defined.
-    // This file can be used for web-service-specific dependencies if needed in the future.
-    runtimeOnly 'com.h2database:h2'
-}
