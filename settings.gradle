@@ -9,11 +9,4 @@ include 'calculation:calculation-domain',
         'calculation-policy-monthlyfee',
         'web-service',
         'batch',
-        'testgen',
-        'bill',
-        'bill:bill-api',
-        'bill:bill-application',
-        'bill:bill-domain',
-        'bill:bill-infrastructure',
-        'bill:bill-port',
-        'bill-prework'
+        'testgen'

@@ -1,3 +1,0 @@
-// Bill parent module - aggregates all bill submodules
-bootJar { enabled = false }
-jar { enabled = false }
