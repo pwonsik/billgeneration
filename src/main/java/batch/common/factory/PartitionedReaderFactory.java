@@ -5,7 +5,7 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.stereotype.Component;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformationPipeline;
+import batch.common.pipeline.DataTransformer;
 import batch.common.reader.UniversalPartitionedReader;
 
 /**
@@ -27,7 +27,7 @@ public class PartitionedReaderFactory {
      * @return 설정이 완료된 {@link UniversalPartitionedReader} 인스턴스
      */
     public <T> ItemStreamReader<T> createReader(
-            DataTransformationPipeline<T> pipeline,
+            DataTransformer<T> pipeline,
             SqlSessionFactory sqlSessionFactory,
             BillParameters parameters,
             Integer partitionKey,

@@ -5,7 +5,7 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.stereotype.Component;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformationPipeline;
+import batch.common.pipeline.DataTransformer;
 import batch.common.reader.UniversalChunkedReader;
 
 /**
@@ -25,7 +25,7 @@ public class ChunkedReaderFactory {
      * @return 설정이 완료된 {@link UniversalChunkedReader} 인스턴스
      */
     public <T> ItemStreamReader<T> createReader(
-            DataTransformationPipeline<T> pipeline,
+            DataTransformer<T> pipeline,
             SqlSessionFactory sqlSessionFactory,
             BillParameters parameters) {
 

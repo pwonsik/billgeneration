@@ -1,32 +1,60 @@
 package batch.common.pipeline;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import bill.application.CalculationTargetQueryService;
+import batch.common.pipeline.steps.LoadDiscountsStep;
+import batch.common.pipeline.steps.LoadMonthlyChargeStep;
+import batch.common.pipeline.steps.LoadOneTimeChargeStep;
+import bill.application.monthlyfee.MonthlyFeeDataLoader;
+import bill.application.onetimecharge.OneTimeChargeDataLoader;
 import bill.domain.CalculationContext;
 import bill.domain.CalculationTarget;
-
-import java.util.List;
+import bill.domain.monthlyfee.MonthlyChargeDomain;
+import bill.domain.onetimecharge.OneTimeChargeDomain;
+import bill.port.out.ContractDiscountQueryPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 계약 ID를 {@link CalculationTarget}으로 변환하는 파이프라인 구현체입니다.
- * 월정액 계산 배치 작업에서 사용됩니다.
+ * 여러 데이터 로딩 단계를 순차적으로 실행하여 CalculationTarget을 생성합니다.
  */
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor
-public class CalculationTargetPipeline implements DataTransformationPipeline<CalculationTarget> {
+public class CalculationTargetPipeline implements DataTransformer<CalculationTarget> {
 
-    private final CalculationTargetQueryService calculationTargetQueryService;
+    private final List<MonthlyFeeDataLoader<? extends MonthlyChargeDomain>> monthlyFeeLoaders;
+    private final List<OneTimeChargeDataLoader<? extends OneTimeChargeDomain>> oneTimeChargeLoaders;
+    private final ContractDiscountQueryPort discountQueryPort;
 
     @Override
     public List<CalculationTarget> transform(List<Long> contractIds, CalculationContext context) {
         log.debug("계약 ID {}건을 CalculationTarget으로 변환 시작", contractIds.size());
-        List<CalculationTarget> result = calculationTargetQueryService.loadCalculationTargets(contractIds, context);
+        
+        // 파이프라인 구성
+        DataTransformationPipeline pipeline = new DataTransformationPipeline("CalculationTargetPipeline");
+        
+        // MonthlyCharge 로딩 단계 추가
+        for (MonthlyFeeDataLoader<? extends MonthlyChargeDomain> loader : monthlyFeeLoaders) {
+            pipeline.addStep(new LoadMonthlyChargeStep<>(loader));
+        }
+        
+        // OneTimeCharge 로딩 단계 추가
+        for (OneTimeChargeDataLoader<? extends OneTimeChargeDomain> loader : oneTimeChargeLoaders) {
+            pipeline.addStep(new LoadOneTimeChargeStep<>(loader));
+        }
+        
+        // Discount 로딩 단계 추가
+        pipeline.addStep(new LoadDiscountsStep(discountQueryPort));
+        
+        // 파이프라인 실행
+        List<CalculationTarget> result = pipeline.transform(contractIds, context);
+        
         log.debug("CalculationTarget 변환 완료: {}건", result.size());
         return result;
     }
 }
+

@@ -11,7 +11,7 @@ import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.lang.NonNull;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformationPipeline;
+import batch.common.pipeline.DataTransformer;
 import bill.domain.CalculationContext;
 
 import static batch.common.constant.BatchConstants.CHUNK_SIZE;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Slf4j
 public class UniversalPartitionedReader<T> implements ItemStreamReader<T> {
 
-    private final DataTransformationPipeline<T> transformationPipeline;
+    private final DataTransformer<T> transformationPipeline;
     private final SqlSessionFactory sqlSessionFactory;
     private final BillParameters calculationParameters;
     private final Integer partitionKey;
@@ -43,7 +43,7 @@ public class UniversalPartitionedReader<T> implements ItemStreamReader<T> {
     private boolean initialized = false;
 
     public UniversalPartitionedReader(
-            DataTransformationPipeline<T> transformationPipeline,
+            DataTransformer<T> transformationPipeline,
             SqlSessionFactory sqlSessionFactory,
             BillParameters calculationParameters,
             Integer partitionKey,
@@ -55,7 +55,7 @@ public class UniversalPartitionedReader<T> implements ItemStreamReader<T> {
         this.partitionCount = partitionCount;
 
         log.info("=== UniversalPartitionedReader 생성 (파티션 {}, 파이프라인: {}) ===", 
-                partitionKey, transformationPipeline.getPipelineName());
+                partitionKey, transformationPipeline.getName());
         log.info("Partition Key: {}, Partition Count: {}", partitionKey, partitionCount);
     }
 
@@ -192,7 +192,7 @@ public class UniversalPartitionedReader<T> implements ItemStreamReader<T> {
     private List<T> transformData(List<Long> contractIds) {
         CalculationContext ctx = calculationParameters.toCalculationContext();
         log.debug("파이프라인 '{}'을(를) 사용하여 {} 건의 계약 ID 변환 시작 (파티션 {})",
-                transformationPipeline.getPipelineName(), contractIds.size(), partitionKey);
+                transformationPipeline.getName(), contractIds.size(), partitionKey);
         return transformationPipeline.transform(contractIds, ctx);
     }
 }

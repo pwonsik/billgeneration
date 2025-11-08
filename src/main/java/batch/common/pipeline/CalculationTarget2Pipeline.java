@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
  * 계약 ID를 {@link CalculationTarget2}로 변환하는 파이프라인 구현체입니다.
  * 2번 작업 배치에서 사용됩니다.
  */
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor
-public class CalculationTarget2Pipeline implements DataTransformationPipeline<CalculationTarget2> {
+public class CalculationTarget2Pipeline implements DataTransformer<CalculationTarget2> {
 
     @Override
     public List<CalculationTarget2> transform(List<Long> contractIds, CalculationContext context) {

@@ -33,15 +33,11 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * 2번 작업용 배치 설정 (예시)
- * CalculationTarget2를 사용하는 완전히 다른 작업
- */
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "spring.batch.job.names", havingValue = "secondCalculationJob")
+@ConditionalOnProperty(name = "spring.batch.job.name", havingValue = "sample1Job")
 @Slf4j
-public class SecondCalculationBatchConfig {
+public class BillSample1Config {
 
     private final SqlSessionFactory sqlSessionFactory;
     private final JobRepository jobRepository;

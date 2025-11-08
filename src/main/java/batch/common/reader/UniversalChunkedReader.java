@@ -11,7 +11,7 @@ import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.lang.NonNull;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformationPipeline;
+import batch.common.pipeline.DataTransformer;
 import bill.domain.CalculationContext;
 
 import static batch.common.constant.BatchConstants.CHUNK_SIZE;
@@ -30,7 +30,7 @@ import java.util.Map;
 @Slf4j
 public class UniversalChunkedReader<T> implements ItemStreamReader<T> {
 
-    private final DataTransformationPipeline<T> transformationPipeline;
+    private final DataTransformer<T> transformationPipeline;
     private final SqlSessionFactory sqlSessionFactory;
     private final BillParameters calculationParameters;
 
@@ -41,15 +41,15 @@ public class UniversalChunkedReader<T> implements ItemStreamReader<T> {
     private boolean initialized = false;
 
     public UniversalChunkedReader(
-            DataTransformationPipeline<T> transformationPipeline,
+            DataTransformer<T> transformationPipeline,
             SqlSessionFactory sqlSessionFactory,
             BillParameters calculationParameters) {
         this.transformationPipeline = transformationPipeline;
         this.sqlSessionFactory = sqlSessionFactory;
         this.calculationParameters = calculationParameters;
 
-        log.info("=== UniversalChunkedReader 생성 (파이프라인: {}) ===", 
-                transformationPipeline.getPipelineName());
+        log.info("=== UniversalChunkedReader 생성 (파이프라인: {}) ===",
+                transformationPipeline.getName());
     }
 
     @Override
@@ -157,7 +157,7 @@ public class UniversalChunkedReader<T> implements ItemStreamReader<T> {
     private List<T> transformData(List<Long> contractIds) {
         CalculationContext ctx = calculationParameters.toCalculationContext();
         log.debug("파이프라인 '{}'을(를) 사용하여 {} 건의 계약 ID 변환 시작",
-                transformationPipeline.getPipelineName(), contractIds.size());
+                transformationPipeline.getName(), contractIds.size());
         return transformationPipeline.transform(contractIds, ctx);
     }
 }
