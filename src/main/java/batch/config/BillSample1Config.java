@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import batch.BillParameters;
-import batch.common.pipeline.CalculationTarget2Pipeline;
+import common.pipeline.CalculationTarget2Pipeline;
 import batch.common.reader.UniversalChunkedReader;
 import batch.common.reader.UniversalPartitionedReader;
 

@@ -12,7 +12,7 @@ import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.lang.NonNull;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformer;
+import common.pipeline.DataTransformer;
 
 import static common.domain.constant.BatchConstants.CHUNK_SIZE;
 

@@ -1,12 +1,12 @@
-package batch.common.pipeline;
+package common.pipeline;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import batch.common.pipeline.steps.LoadDiscountsStep;
-import batch.common.pipeline.steps.LoadMonthlyChargeStep;
-import batch.common.pipeline.steps.LoadOneTimeChargeStep;
+import common.pipeline.steps.LoadDiscountsStep;
+import common.pipeline.steps.LoadMonthlyChargeStep;
+import common.pipeline.steps.LoadOneTimeChargeStep;
 import wirelessbill.application.monthlyfee.MonthlyFeeDataLoader;
 import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
 import wirelessbill.domain.CalculationContext;

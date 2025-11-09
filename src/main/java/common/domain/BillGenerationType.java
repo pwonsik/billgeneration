@@ -30,14 +30,6 @@ public enum BillGenerationType {
         this.channelMode = channelMode;
     }
 
-//    public boolean includeBillingEndDate() {
-//        return this == REVENUE_CONFIRMATION || this == REVENUE_ESTIMATION || this == FUTURE_CHARGE_INQUIRY;
-//    }
-//
-//    public boolean isTerminationAssumed() {
-//        return this == TERMINATION_INQUIRY || this == EXPECTATION_PENALTY_CREATION || this == EXPECTATION_PENALTY_INQUIRY;
-//    }
-
     public static BillGenerationType fromCode(String code) {
         return Arrays.stream(BillGenerationType.values())
                 .filter(period -> period.getCode().equals(code))
@@ -72,8 +64,4 @@ public enum BillGenerationType {
     public boolean isReissueBill() {
         return this.issueType.isReissueBill();
     }
-
-//    public boolean isPostable() {
-//        return this == REVENUE_CONFIRMATION;
-//    }
 }

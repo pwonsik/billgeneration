@@ -1,9 +1,9 @@
-package batch.common.pipeline.steps;
+package common.pipeline.steps;
 
 import java.util.List;
 
-import batch.common.pipeline.CalculationTargetBuilder;
-import batch.common.pipeline.DataLoadingStep;
+import common.pipeline.CalculationTargetBuilder;
+import common.pipeline.DataLoadingStep;
 import wirelessbill.domain.CalculationContext;
 import wirelessbill.domain.discount.ContractDiscounts;
 import wirelessbill.domain.discount.Discount;

@@ -1,4 +1,4 @@
-package batch.common.pipeline;
+package common.pipeline;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

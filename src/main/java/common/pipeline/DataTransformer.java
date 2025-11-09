@@ -1,4 +1,4 @@
-package batch.common.pipeline;
+package common.pipeline;
 
 import java.util.List;
 

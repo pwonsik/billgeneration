@@ -27,7 +27,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import batch.BillParameters;
-import batch.common.pipeline.CalculationTargetPipeline;
+import common.pipeline.CalculationTargetPipeline;
 import batch.common.reader.UniversalChunkedReader;
 import batch.processor.CalculationProcessor;
 import batch.tasklet.CalculationResultCleanupTasklet;

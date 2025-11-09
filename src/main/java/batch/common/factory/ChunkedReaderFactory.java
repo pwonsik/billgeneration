@@ -5,7 +5,7 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.stereotype.Component;
 
 import batch.BillParameters;
-import batch.common.pipeline.DataTransformer;
+import common.pipeline.DataTransformer;
 import batch.common.reader.UniversalChunkedReader;
 
 /**

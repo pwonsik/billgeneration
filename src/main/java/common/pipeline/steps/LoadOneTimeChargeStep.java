@@ -1,10 +1,10 @@
-package batch.common.pipeline.steps;
+package common.pipeline.steps;
 
 import java.util.List;
 import java.util.Map;
 
-import batch.common.pipeline.CalculationTargetBuilder;
-import batch.common.pipeline.DataLoadingStep;
+import common.pipeline.CalculationTargetBuilder;
+import common.pipeline.DataLoadingStep;
 import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
 import wirelessbill.domain.CalculationContext;
 import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
