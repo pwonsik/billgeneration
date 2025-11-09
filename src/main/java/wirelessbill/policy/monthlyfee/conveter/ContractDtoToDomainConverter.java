@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.conveter;
+package wirelessbill.policy.monthlyfee.conveter;
 
 import java.util.List;
 import java.util.Objects;
@@ -7,18 +7,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import bill.domain.monthlyfee.CalculationMethod;
-import bill.domain.monthlyfee.ChargeItem;
-import bill.domain.monthlyfee.Pricing;
-import bill.domain.monthlyfee.Product;
-import bill.domain.monthlyfee.ProductOffering;
-import bill.domain.monthlyfee.Suspension;
-import bill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
-import bill.policy.monthlyfee.domain.FlatRatePolicy;
-import bill.policy.monthlyfee.dto.ChargeItemDto;
-import bill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
-import bill.policy.monthlyfee.dto.ProductDto;
-import bill.policy.monthlyfee.dto.SuspensionDto;
+import wirelessbill.domain.monthlyfee.CalculationMethod;
+import wirelessbill.domain.monthlyfee.ChargeItem;
+import wirelessbill.domain.monthlyfee.Pricing;
+import wirelessbill.domain.monthlyfee.Product;
+import wirelessbill.domain.monthlyfee.ProductOffering;
+import wirelessbill.domain.monthlyfee.Suspension;
+import wirelessbill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
+import wirelessbill.policy.monthlyfee.domain.FlatRatePolicy;
+import wirelessbill.policy.monthlyfee.dto.ChargeItemDto;
+import wirelessbill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
+import wirelessbill.policy.monthlyfee.dto.ProductDto;
+import wirelessbill.policy.monthlyfee.dto.SuspensionDto;
 
 @Component
 public class ContractDtoToDomainConverter {

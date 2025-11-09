@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bill.api.CalculationCommandUseCase;
-import bill.api.CalculationResultGroup;
-import bill.domain.CalculationContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,6 +19,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.api.CalculationCommandUseCase;
+import wirelessbill.api.CalculationResultGroup;
+import wirelessbill.domain.CalculationContext;
 
 /**
  * 계산 관련 REST API Controller

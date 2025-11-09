@@ -2,6 +2,9 @@ package batch.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.BillingCalculationType;
+import wirelessbill.domain.CalculationTarget2;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
@@ -23,11 +26,8 @@ import batch.BillParameters;
 import batch.common.pipeline.CalculationTarget2Pipeline;
 import batch.common.reader.UniversalChunkedReader;
 import batch.common.reader.UniversalPartitionedReader;
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.BillingCalculationType;
-import bill.domain.CalculationTarget2;
 
-import static batch.common.constant.BatchConstants.CHUNK_SIZE;
+import static common.domain.constant.BatchConstants.CHUNK_SIZE;
 
 import java.time.LocalDate;
 import java.util.Arrays;

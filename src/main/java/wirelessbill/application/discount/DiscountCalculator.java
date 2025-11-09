@@ -1,16 +1,15 @@
-package bill.application.discount;
+package wirelessbill.application.discount;
 
 import lombok.RequiredArgsConstructor;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.discount.ContractDiscounts;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.port.out.ContractDiscountCommandPort;
+import wirelessbill.port.out.ContractDiscountQueryPort;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
-
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.domain.discount.ContractDiscounts;
-import bill.domain.discount.Discount;
-import bill.port.out.ContractDiscountCommandPort;
-import bill.port.out.ContractDiscountQueryPort;
 
 import java.math.BigDecimal;
 import java.util.List;

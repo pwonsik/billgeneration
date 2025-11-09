@@ -1,6 +1,6 @@
-package bill.policy.monthlyfee.port;
+package wirelessbill.policy.monthlyfee.port;
 
-import bill.domain.BillingCalculationType;
+import wirelessbill.domain.BillingCalculationType;
 
 /**
  * ProductQueryPort 구현체를 BillingCalculationType별로 해결하는 인터페이스

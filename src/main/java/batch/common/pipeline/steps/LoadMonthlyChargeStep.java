@@ -5,9 +5,9 @@ import java.util.Map;
 
 import batch.common.pipeline.CalculationTargetBuilder;
 import batch.common.pipeline.DataLoadingStep;
-import bill.application.monthlyfee.MonthlyFeeDataLoader;
-import bill.domain.CalculationContext;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.application.monthlyfee.MonthlyFeeDataLoader;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
 
 /**
  * MonthlyCharge 데이터를 로딩하는 파이프라인 단계

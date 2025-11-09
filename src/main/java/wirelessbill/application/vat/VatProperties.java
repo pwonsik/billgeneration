@@ -1,4 +1,4 @@
-package bill.application.vat;
+package wirelessbill.application.vat;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,4 +1,4 @@
-package bill.domain;
+package wirelessbill.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

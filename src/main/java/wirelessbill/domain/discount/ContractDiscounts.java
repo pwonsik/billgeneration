@@ -1,4 +1,4 @@
-package bill.domain.discount;
+package wirelessbill.domain.discount;
 
 import java.util.List;
 

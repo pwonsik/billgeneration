@@ -1,12 +1,11 @@
-package bill.application;
+package wirelessbill.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationTarget;
 
 import org.springframework.stereotype.Service;
-
-import bill.domain.CalculationContext;
-import bill.domain.CalculationTarget;
 
 import java.util.List;
 

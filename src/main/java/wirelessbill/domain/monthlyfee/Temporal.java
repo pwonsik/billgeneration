@@ -1,4 +1,4 @@
-package bill.domain.monthlyfee;
+package wirelessbill.domain.monthlyfee;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

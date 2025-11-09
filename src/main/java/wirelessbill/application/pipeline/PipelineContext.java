@@ -1,14 +1,13 @@
-package bill.application.pipeline;
+package wirelessbill.application.pipeline;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.CalculationTarget;
 
 import java.util.List;
-
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.domain.CalculationTarget;
 
 @Getter
 @Setter

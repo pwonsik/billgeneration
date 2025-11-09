@@ -1,12 +1,12 @@
-package bill.domain;
+package wirelessbill.domain;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import bill.domain.discount.Discount;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 public record CalculationTarget(
     Long contractId,

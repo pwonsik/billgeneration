@@ -1,14 +1,14 @@
-package bill.domain.discount;
+package wirelessbill.domain.discount;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import bill.domain.CalculationResult;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import wirelessbill.domain.CalculationResult;
 
 /**
  * 개별 할인 정보

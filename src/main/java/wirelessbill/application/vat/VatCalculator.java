@@ -1,4 +1,4 @@
-package bill.application.vat;
+package wirelessbill.application.vat;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import bill.application.masterdata.RevenueMasterDataCacheService;
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.domain.masterdata.RevenueMasterData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.masterdata.RevenueMasterDataCacheService;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.masterdata.RevenueMasterData;
 
 /**
  * VAT 계산기

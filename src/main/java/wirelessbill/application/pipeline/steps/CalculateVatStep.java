@@ -1,13 +1,13 @@
-package bill.application.pipeline.steps;
+package wirelessbill.application.pipeline.steps;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bill.application.pipeline.CalculationStep;
-import bill.application.pipeline.PipelineContext;
-import bill.application.vat.VatCalculator;
-import bill.domain.CalculationResult;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.application.pipeline.CalculationStep;
+import wirelessbill.application.pipeline.PipelineContext;
+import wirelessbill.application.vat.VatCalculator;
+import wirelessbill.domain.CalculationResult;
 
 @RequiredArgsConstructor
 public class CalculateVatStep implements CalculationStep {

@@ -1,13 +1,12 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import lombok.RequiredArgsConstructor;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.Pricing;
 
 
 /*

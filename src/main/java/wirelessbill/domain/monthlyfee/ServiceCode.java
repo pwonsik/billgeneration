@@ -1,4 +1,4 @@
-package bill.domain.monthlyfee;
+package wirelessbill.domain.monthlyfee;
 
 public enum ServiceCode {
     EXCLUSIVE_LINE

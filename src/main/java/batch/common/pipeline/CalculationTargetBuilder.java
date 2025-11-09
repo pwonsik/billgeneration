@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bill.domain.CalculationTarget;
-import bill.domain.discount.Discount;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.domain.CalculationTarget;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 /**
  * CalculationTarget을 단계적으로 구성하는 빌더

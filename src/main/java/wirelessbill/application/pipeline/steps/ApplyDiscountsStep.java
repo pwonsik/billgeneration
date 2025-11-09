@@ -1,13 +1,13 @@
-package bill.application.pipeline.steps;
+package wirelessbill.application.pipeline.steps;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bill.application.discount.DiscountCalculator;
-import bill.application.pipeline.CalculationStep;
-import bill.application.pipeline.PipelineContext;
-import bill.domain.CalculationResult;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.application.discount.DiscountCalculator;
+import wirelessbill.application.pipeline.CalculationStep;
+import wirelessbill.application.pipeline.PipelineContext;
+import wirelessbill.domain.CalculationResult;
 
 @RequiredArgsConstructor
 public class ApplyDiscountsStep implements CalculationStep {

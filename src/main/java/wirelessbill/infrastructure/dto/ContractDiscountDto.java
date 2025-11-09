@@ -1,4 +1,4 @@
-package bill.infrastructure.dto;
+package wirelessbill.infrastructure.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

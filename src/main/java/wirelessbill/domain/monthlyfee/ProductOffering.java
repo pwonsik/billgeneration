@@ -1,4 +1,4 @@
-package bill.domain.monthlyfee;
+package wirelessbill.domain.monthlyfee;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

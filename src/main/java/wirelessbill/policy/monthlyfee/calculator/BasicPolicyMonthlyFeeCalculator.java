@@ -1,15 +1,14 @@
-package bill.policy.monthlyfee.calculator;
+package wirelessbill.policy.monthlyfee.calculator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.monthlyfee.MonthlyFeeCalculator;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import bill.application.monthlyfee.MonthlyFeeCalculator;
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
 
 import java.util.*;
 

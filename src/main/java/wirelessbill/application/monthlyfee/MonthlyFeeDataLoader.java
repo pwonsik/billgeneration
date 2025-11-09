@@ -1,10 +1,10 @@
-package bill.application.monthlyfee;
+package wirelessbill.application.monthlyfee;
 
 import java.util.List;
 import java.util.Map;
 
-import bill.domain.CalculationContext;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
 
 /**
  * Monthly Fee 데이터 로딩 인터페이스

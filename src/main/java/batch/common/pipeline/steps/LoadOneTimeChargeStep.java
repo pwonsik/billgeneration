@@ -5,9 +5,9 @@ import java.util.Map;
 
 import batch.common.pipeline.CalculationTargetBuilder;
 import batch.common.pipeline.DataLoadingStep;
-import bill.application.onetimecharge.OneTimeChargeDataLoader;
-import bill.domain.CalculationContext;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 /**
  * OneTimeCharge 데이터를 로딩하는 파이프라인 단계

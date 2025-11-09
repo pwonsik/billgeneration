@@ -1,6 +1,6 @@
-package bill.policy.onetimecharge.port;
+package wirelessbill.policy.onetimecharge.port;
 
-import bill.policy.onetimecharge.domain.InstallationHistory;
+import wirelessbill.policy.onetimecharge.domain.InstallationHistory;
 
 public interface InstallationHistoryCommandPort {
     void updateChargeStatus(InstallationHistory installationHistory);

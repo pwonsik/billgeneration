@@ -1,4 +1,4 @@
-package bill.infrastructure.adapter.mybatis;
+package wirelessbill.infrastructure.adapter.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

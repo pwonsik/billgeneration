@@ -1,9 +1,9 @@
-package bill.port.out;
+package wirelessbill.port.out;
 
 import java.util.List;
 
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
 
 public interface CalculationResultSavePort {
     void save(CalculationContext context, List<CalculationResult<?>> calculationResults);

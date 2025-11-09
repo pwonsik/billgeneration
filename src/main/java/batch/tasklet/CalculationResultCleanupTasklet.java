@@ -6,9 +6,9 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 
-import bill.infrastructure.adapter.mybatis.CalculationResultMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.infrastructure.adapter.mybatis.CalculationResultMapper;
 
 /**
  * 계산 결과 정리 Tasklet

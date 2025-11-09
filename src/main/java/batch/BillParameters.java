@@ -3,11 +3,11 @@ package batch;
 import java.time.LocalDate;
 import java.util.List;
 
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.BillingCalculationType;
-import bill.domain.CalculationContext;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.BillingCalculationType;
+import wirelessbill.domain.CalculationContext;
 
 @Getter
 @RequiredArgsConstructor

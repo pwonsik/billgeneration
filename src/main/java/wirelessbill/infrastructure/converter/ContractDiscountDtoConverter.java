@@ -1,11 +1,11 @@
-package bill.infrastructure.converter;
+package wirelessbill.infrastructure.converter;
 
 import org.springframework.stereotype.Component;
 
-import bill.domain.discount.ContractDiscounts;
-import bill.domain.discount.Discount;
-import bill.infrastructure.dto.ContractDiscountDto;
-import bill.infrastructure.dto.DiscountDto;
+import wirelessbill.domain.discount.ContractDiscounts;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.infrastructure.dto.ContractDiscountDto;
+import wirelessbill.infrastructure.dto.DiscountDto;
 
 import java.util.List;
 

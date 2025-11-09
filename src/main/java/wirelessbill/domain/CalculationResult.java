@@ -1,4 +1,4 @@
-package bill.domain;
+package wirelessbill.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import bill.domain.monthlyfee.DefaultPeriod;
-import bill.domain.monthlyfee.Suspension;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import wirelessbill.domain.monthlyfee.DefaultPeriod;
+import wirelessbill.domain.monthlyfee.Suspension;
 
 @Getter
 @Setter

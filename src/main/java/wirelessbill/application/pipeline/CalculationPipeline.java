@@ -1,4 +1,4 @@
-package bill.application.pipeline;
+package wirelessbill.application.pipeline;
 
 import java.util.List;
 

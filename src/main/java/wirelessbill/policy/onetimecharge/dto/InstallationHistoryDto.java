@@ -1,4 +1,4 @@
-package bill.policy.onetimecharge.dto;
+package wirelessbill.policy.onetimecharge.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

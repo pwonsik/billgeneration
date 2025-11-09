@@ -1,4 +1,4 @@
-package bill.application.discount;
+package wirelessbill.application.discount;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.stream.Stream;
 
 import org.springframework.stereotype.Component;
 
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.domain.discount.Discount;
-import bill.domain.monthlyfee.DefaultPeriod;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.domain.monthlyfee.DefaultPeriod;
 
 @Component
 public class CalculationResultProrater {

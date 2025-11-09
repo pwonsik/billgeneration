@@ -1,4 +1,4 @@
-package bill.domain;
+package wirelessbill.domain;
 
 /**
  * 계산 결과 후처리를 위한 함수형 인터페이스

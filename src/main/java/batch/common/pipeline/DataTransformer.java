@@ -2,7 +2,7 @@ package batch.common.pipeline;
 
 import java.util.List;
 
-import bill.domain.CalculationContext;
+import wirelessbill.domain.CalculationContext;
 
 /**
  * 계약 ID 리스트를 특정 타입으로 변환하는 인터페이스 (레거시 호환용)

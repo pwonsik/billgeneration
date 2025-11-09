@@ -1,9 +1,9 @@
-package bill.port.out;
+package wirelessbill.port.out;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import bill.domain.discount.ContractDiscounts;
+import wirelessbill.domain.discount.ContractDiscounts;
 
 public interface ContractDiscountQueryPort {
     List<ContractDiscounts> findContractDiscounts(

@@ -1,10 +1,10 @@
-package bill.infrastructure.adapter.mybatis;
+package wirelessbill.infrastructure.adapter.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import bill.domain.discount.Discount;
-import bill.infrastructure.dto.ContractDiscountDto;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.infrastructure.dto.ContractDiscountDto;
 
 import java.time.LocalDate;
 import java.util.List;

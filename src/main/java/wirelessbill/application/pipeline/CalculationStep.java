@@ -1,4 +1,4 @@
-package bill.application.pipeline;
+package wirelessbill.application.pipeline;
 
 @FunctionalInterface
 public interface CalculationStep {

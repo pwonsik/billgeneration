@@ -1,13 +1,13 @@
-package bill.policy.onetimecharge.converter;
+package wirelessbill.policy.onetimecharge.converter;
 
 import org.springframework.stereotype.Component;
 
-import bill.policy.onetimecharge.domain.InstallationHistory;
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentDetail;
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
-import bill.policy.onetimecharge.dto.DeviceInstallmentDetailDto;
-import bill.policy.onetimecharge.dto.DeviceInstallmentDto;
-import bill.policy.onetimecharge.dto.InstallationHistoryDto;
+import wirelessbill.policy.onetimecharge.domain.InstallationHistory;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentDetail;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
+import wirelessbill.policy.onetimecharge.dto.DeviceInstallmentDetailDto;
+import wirelessbill.policy.onetimecharge.dto.DeviceInstallmentDto;
+import wirelessbill.policy.onetimecharge.dto.InstallationHistoryDto;
 
 import java.util.List;
 

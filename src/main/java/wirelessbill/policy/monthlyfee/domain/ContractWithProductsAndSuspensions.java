@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,16 +8,16 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.ChargeItem;
-import bill.domain.monthlyfee.DefaultPeriod;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.monthlyfee.Product;
-import bill.domain.monthlyfee.Suspension;
-import bill.domain.monthlyfee.Temporal;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.ChargeItem;
+import wirelessbill.domain.monthlyfee.DefaultPeriod;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.monthlyfee.Product;
+import wirelessbill.domain.monthlyfee.Suspension;
+import wirelessbill.domain.monthlyfee.Temporal;
 
 @RequiredArgsConstructor
 @Getter

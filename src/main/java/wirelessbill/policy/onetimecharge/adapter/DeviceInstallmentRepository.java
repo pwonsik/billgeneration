@@ -1,14 +1,13 @@
-package bill.policy.onetimecharge.adapter;
+package wirelessbill.policy.onetimecharge.adapter;
 
 import lombok.RequiredArgsConstructor;
+import wirelessbill.policy.onetimecharge.adapter.mybatis.DeviceInstallmentMapper;
+import wirelessbill.policy.onetimecharge.converter.OneTimeChargeDtoConverter;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
+import wirelessbill.policy.onetimecharge.dto.DeviceInstallmentDto;
+import wirelessbill.policy.onetimecharge.port.DeviceInstallmentQueryPort;
 
 import org.springframework.stereotype.Repository;
-
-import bill.policy.onetimecharge.adapter.mybatis.DeviceInstallmentMapper;
-import bill.policy.onetimecharge.converter.OneTimeChargeDtoConverter;
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
-import bill.policy.onetimecharge.dto.DeviceInstallmentDto;
-import bill.policy.onetimecharge.port.DeviceInstallmentQueryPort;
 
 import java.time.LocalDate;
 import java.util.List;

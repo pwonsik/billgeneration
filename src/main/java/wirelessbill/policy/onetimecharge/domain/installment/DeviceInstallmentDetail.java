@@ -1,4 +1,4 @@
-package bill.policy.onetimecharge.domain.installment;
+package wirelessbill.policy.onetimecharge.domain.installment;
 
 /**
  * 단말할부 상세 정보

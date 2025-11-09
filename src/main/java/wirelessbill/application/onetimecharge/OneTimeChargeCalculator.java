@@ -1,10 +1,10 @@
-package bill.application.onetimecharge;
+package wirelessbill.application.onetimecharge;
 
 import java.util.List;
 
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 /**
  * OneTimeCharge 계산기 인터페이스

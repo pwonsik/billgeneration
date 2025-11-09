@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,16 +6,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.ChargeItem;
-import bill.domain.monthlyfee.Product;
-import bill.domain.monthlyfee.ProductOffering;
-import bill.domain.monthlyfee.Suspension;
-import bill.domain.monthlyfee.Suspension.SuspensionType;
-import bill.domain.monthlyfee.Temporal;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.ChargeItem;
+import wirelessbill.domain.monthlyfee.Product;
+import wirelessbill.domain.monthlyfee.ProductOffering;
+import wirelessbill.domain.monthlyfee.Suspension;
+import wirelessbill.domain.monthlyfee.Temporal;
+import wirelessbill.domain.monthlyfee.Suspension.SuspensionType;
 
 @RequiredArgsConstructor
 @Builder

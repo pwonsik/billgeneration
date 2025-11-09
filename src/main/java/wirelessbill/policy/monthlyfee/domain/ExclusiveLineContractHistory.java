@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
 
 @RequiredArgsConstructor
 public class ExclusiveLineContractHistory implements ProvidesAdditionalBillingDetails {

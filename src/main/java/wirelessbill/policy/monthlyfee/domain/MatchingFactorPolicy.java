@@ -1,11 +1,11 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.Pricing;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 public class MatchingFactorPolicy implements Pricing {
 

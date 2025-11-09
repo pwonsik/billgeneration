@@ -4,10 +4,10 @@ import java.util.List;
 
 import batch.common.pipeline.CalculationTargetBuilder;
 import batch.common.pipeline.DataLoadingStep;
-import bill.domain.CalculationContext;
-import bill.domain.discount.ContractDiscounts;
-import bill.domain.discount.Discount;
-import bill.port.out.ContractDiscountQueryPort;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.discount.ContractDiscounts;
+import wirelessbill.domain.discount.Discount;
+import wirelessbill.port.out.ContractDiscountQueryPort;
 
 /**
  * Discount 데이터를 로딩하는 파이프라인 단계

@@ -1,9 +1,9 @@
-package bill.infrastructure.adapter.mybatis;
+package wirelessbill.infrastructure.adapter.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import bill.infrastructure.dto.RevenueMasterDataDto;
+import wirelessbill.infrastructure.dto.RevenueMasterDataDto;
 
 import java.time.LocalDate;
 import java.util.List;

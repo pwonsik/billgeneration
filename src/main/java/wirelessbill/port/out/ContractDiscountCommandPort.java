@@ -1,6 +1,6 @@
-package bill.port.out;
+package wirelessbill.port.out;
 
-import bill.domain.discount.Discount;
+import wirelessbill.domain.discount.Discount;
 
 public interface ContractDiscountCommandPort {
     void applyDiscount(Discount discount);

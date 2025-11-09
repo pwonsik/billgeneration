@@ -1,17 +1,16 @@
-package bill.application;
+package wirelessbill.application;
 
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.discount.DiscountCalculator;
+import wirelessbill.application.monthlyfee.MonthlyFeeDataLoader;
+import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationTarget;
+import wirelessbill.domain.discount.ContractDiscounts;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 import org.springframework.stereotype.Component;
-
-import bill.application.discount.DiscountCalculator;
-import bill.application.monthlyfee.MonthlyFeeDataLoader;
-import bill.application.onetimecharge.OneTimeChargeDataLoader;
-import bill.domain.CalculationContext;
-import bill.domain.CalculationTarget;
-import bill.domain.discount.ContractDiscounts;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
 
 import java.util.*;
 import java.util.function.Function;

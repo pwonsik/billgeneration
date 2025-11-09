@@ -1,4 +1,4 @@
-package bill.domain.onetimecharge;
+package wirelessbill.domain.onetimecharge;
 
 /**
  * OneTimeCharge 도메인 객체임을 표시하는 마커 인터페이스

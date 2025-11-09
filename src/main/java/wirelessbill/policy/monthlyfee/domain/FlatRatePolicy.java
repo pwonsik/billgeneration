@@ -1,10 +1,10 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.Pricing;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 
 /* 상품에 정의된 월정액료를 가져와서 일할계산합니다. 가장 기본적인 계산방식입니다. */

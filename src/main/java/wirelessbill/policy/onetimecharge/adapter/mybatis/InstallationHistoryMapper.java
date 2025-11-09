@@ -1,9 +1,9 @@
-package bill.policy.onetimecharge.adapter.mybatis;
+package wirelessbill.policy.onetimecharge.adapter.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import bill.policy.onetimecharge.dto.InstallationHistoryDto;
+import wirelessbill.policy.onetimecharge.dto.InstallationHistoryDto;
 
 import java.time.LocalDate;
 import java.util.List;

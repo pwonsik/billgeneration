@@ -1,9 +1,9 @@
-package bill.policy.monthlyfee.adapter.mybatis;
+package wirelessbill.policy.monthlyfee.adapter.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import bill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
+import wirelessbill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
 
 import java.time.LocalDate;
 import java.util.List;

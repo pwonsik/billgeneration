@@ -1,4 +1,4 @@
-package bill.domain;
+package wirelessbill.domain;
 
 import lombok.Getter;
 

@@ -2,14 +2,14 @@ package batch.writer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.api.CalculationResultGroup;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.port.out.CalculationResultSavePort;
 
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 
 import batch.BillParameters;
-import bill.api.CalculationResultGroup;
-import bill.domain.CalculationResult;
-import bill.port.out.CalculationResultSavePort;
 
 import java.util.List;
 

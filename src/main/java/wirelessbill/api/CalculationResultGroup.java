@@ -1,8 +1,8 @@
-package bill.api;
+package wirelessbill.api;
 
 import java.util.List;
 
-import bill.domain.CalculationResult;
+import wirelessbill.domain.CalculationResult;
 
 public record CalculationResultGroup(
     List<CalculationResult<?>> calculationResults

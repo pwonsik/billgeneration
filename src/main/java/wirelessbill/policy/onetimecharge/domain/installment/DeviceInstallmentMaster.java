@@ -1,15 +1,14 @@
-package bill.policy.onetimecharge.domain.installment;
+package wirelessbill.policy.onetimecharge.domain.installment;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.BillingCalculationType;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.BillingCalculationType;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
 
 /**
  * 단말할부 마스터 정보

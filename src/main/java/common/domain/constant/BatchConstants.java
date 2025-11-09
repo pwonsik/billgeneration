@@ -1,4 +1,4 @@
-package batch.common.constant;
+package common.domain.constant;
 
 /**
  * Spring Batch 관련 상수 정의

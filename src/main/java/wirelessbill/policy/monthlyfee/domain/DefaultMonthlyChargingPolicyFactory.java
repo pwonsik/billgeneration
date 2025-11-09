@@ -1,11 +1,10 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import jakarta.annotation.PostConstruct;
+import wirelessbill.domain.monthlyfee.CalculationMethod;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 import org.springframework.stereotype.Component;
-
-import bill.domain.monthlyfee.CalculationMethod;
-import bill.domain.monthlyfee.Pricing;
 
 import java.util.HashMap;
 import java.util.Map;

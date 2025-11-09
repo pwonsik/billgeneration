@@ -2,11 +2,11 @@ package web.controller;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.BillingCalculationType;
+
 import java.time.LocalDate;
 import java.util.List;
-
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.BillingCalculationType;
 
 public record CalculationRequest(
     @NotEmpty(message = "계약 ID 목록은 비어있을 수 없습니다")

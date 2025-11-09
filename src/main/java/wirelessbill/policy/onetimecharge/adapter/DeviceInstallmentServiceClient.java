@@ -1,9 +1,9 @@
-package bill.policy.onetimecharge.adapter;
+package wirelessbill.policy.onetimecharge.adapter;
 
 import org.springframework.stereotype.Component;
 
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
-import bill.policy.onetimecharge.port.DeviceInstallmentCommandPort;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
+import wirelessbill.policy.onetimecharge.port.DeviceInstallmentCommandPort;
 
 @Component
 public class DeviceInstallmentServiceClient implements DeviceInstallmentCommandPort {

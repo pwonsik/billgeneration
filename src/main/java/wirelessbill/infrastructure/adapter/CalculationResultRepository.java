@@ -1,15 +1,15 @@
-package bill.infrastructure.adapter;
+package wirelessbill.infrastructure.adapter;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.infrastructure.adapter.mybatis.CalculationResultMapper;
-import bill.port.out.CalculationResultSavePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.infrastructure.adapter.mybatis.CalculationResultMapper;
+import wirelessbill.port.out.CalculationResultSavePort;
 
 /**
  * 계산 결과 저장을 위한 Repository 구현체

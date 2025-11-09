@@ -1,11 +1,11 @@
-package bill.infrastructure.adapter.mybatis;
+package wirelessbill.infrastructure.adapter.mybatis;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import bill.domain.CalculationResult;
+import wirelessbill.domain.CalculationResult;
 
 /**
  * 계산 결과 저장을 위한 MyBatis Mapper

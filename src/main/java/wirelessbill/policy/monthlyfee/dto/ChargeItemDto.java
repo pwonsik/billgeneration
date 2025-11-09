@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.dto;
+package wirelessbill.policy.monthlyfee.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

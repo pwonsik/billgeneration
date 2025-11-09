@@ -1,6 +1,6 @@
 package batch.common.pipeline;
 
-import bill.domain.CalculationContext;
+import wirelessbill.domain.CalculationContext;
 
 /**
  * 파이프라인의 각 단계를 나타내는 인터페이스

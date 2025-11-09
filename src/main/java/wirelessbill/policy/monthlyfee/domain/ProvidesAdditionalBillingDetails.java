@@ -1,6 +1,6 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
 
 public interface ProvidesAdditionalBillingDetails {
     AdditionalBillingFactor getAdditionalBillingFactors();

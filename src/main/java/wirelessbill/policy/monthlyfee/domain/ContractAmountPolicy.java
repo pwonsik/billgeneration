@@ -1,11 +1,11 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import bill.domain.monthlyfee.AdditionalBillingFactor;
-import bill.domain.monthlyfee.Pricing;
+import wirelessbill.domain.monthlyfee.AdditionalBillingFactor;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 
 /* 추가과금요소의 계약금액을 가져와서 일할계산합니다. */

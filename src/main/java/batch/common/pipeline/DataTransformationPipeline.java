@@ -3,8 +3,8 @@ package batch.common.pipeline;
 import java.util.ArrayList;
 import java.util.List;
 
-import bill.domain.CalculationContext;
-import bill.domain.CalculationTarget;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationTarget;
 
 /**
  * 계약 ID로부터 CalculationTarget을 생성하는 파이프라인

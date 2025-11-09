@@ -1,10 +1,10 @@
-package bill.application.service;
+package wirelessbill.application.service;
 
 import org.springframework.stereotype.Service;
 
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.CalculationContext;
-import bill.domain.monthlyfee.DefaultPeriod;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.monthlyfee.DefaultPeriod;
 
 import java.time.LocalDate;
 

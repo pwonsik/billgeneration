@@ -1,7 +1,7 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
-import bill.domain.monthlyfee.CalculationMethod;
-import bill.domain.monthlyfee.Pricing;
+import wirelessbill.domain.monthlyfee.CalculationMethod;
+import wirelessbill.domain.monthlyfee.Pricing;
 
 public interface MonthlyChargingPolicyFactory {
     Pricing getPolicy(CalculationMethod calculationMethod);

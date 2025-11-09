@@ -1,9 +1,9 @@
-package bill.infrastructure.converter;
+package wirelessbill.infrastructure.converter;
 
 import org.springframework.stereotype.Component;
 
-import bill.domain.masterdata.RevenueMasterData;
-import bill.infrastructure.dto.RevenueMasterDataDto;
+import wirelessbill.domain.masterdata.RevenueMasterData;
+import wirelessbill.infrastructure.dto.RevenueMasterDataDto;
 
 /**
  * RevenueMasterData DTO와 Domain 객체 간 변환 로직

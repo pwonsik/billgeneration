@@ -2,11 +2,10 @@ package batch.common.pipeline;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationTarget2;
 
 import org.springframework.stereotype.Component;
-
-import bill.domain.CalculationContext;
-import bill.domain.CalculationTarget2;
 
 import java.math.BigDecimal;
 import java.util.List;

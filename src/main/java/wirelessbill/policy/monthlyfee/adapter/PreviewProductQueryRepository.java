@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.adapter;
+package wirelessbill.policy.monthlyfee.adapter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import bill.policy.monthlyfee.adapter.mybatis.PreviewProductQueryMapper;
-import bill.policy.monthlyfee.conveter.ContractDtoToDomainConverter;
-import bill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
-import bill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
-import bill.policy.monthlyfee.port.ProductQueryPort;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.policy.monthlyfee.adapter.mybatis.PreviewProductQueryMapper;
+import wirelessbill.policy.monthlyfee.conveter.ContractDtoToDomainConverter;
+import wirelessbill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
+import wirelessbill.policy.monthlyfee.dto.ContractProductsSuspensionsDto;
+import wirelessbill.policy.monthlyfee.port.ProductQueryPort;
 
 @Repository
 @RequiredArgsConstructor

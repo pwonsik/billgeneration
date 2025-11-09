@@ -1,4 +1,4 @@
-package bill.policy.onetimecharge.loader;
+package wirelessbill.policy.onetimecharge.loader;
 
 import java.util.List;
 import java.util.Map;
@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import bill.application.onetimecharge.OneTimeChargeDataLoader;
-import bill.domain.CalculationContext;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
-import bill.policy.onetimecharge.port.DeviceInstallmentQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
+import wirelessbill.policy.onetimecharge.port.DeviceInstallmentQueryPort;
 
 /**
  * DeviceInstallmentMaster 데이터 로딩 전담 클래스

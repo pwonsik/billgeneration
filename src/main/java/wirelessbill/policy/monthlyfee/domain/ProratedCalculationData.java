@@ -1,10 +1,10 @@
-package bill.policy.monthlyfee.domain;
+package wirelessbill.policy.monthlyfee.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import bill.domain.monthlyfee.Suspension.SuspensionType;
+import wirelessbill.domain.monthlyfee.Suspension.SuspensionType;
 
 /**
  * 일할 계산을 위한 순수 계산 데이터

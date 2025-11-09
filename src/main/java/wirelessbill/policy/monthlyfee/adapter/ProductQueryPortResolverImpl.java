@@ -1,13 +1,12 @@
-package bill.policy.monthlyfee.adapter;
+package wirelessbill.policy.monthlyfee.adapter;
 
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.BillingCalculationType;
+import wirelessbill.policy.monthlyfee.port.ProductQueryPort;
+import wirelessbill.policy.monthlyfee.port.ProductQueryPortResolver;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import bill.domain.BillingCalculationType;
-import bill.policy.monthlyfee.port.ProductQueryPort;
-import bill.policy.monthlyfee.port.ProductQueryPortResolver;
 
 import java.util.HashMap;
 import java.util.Map;

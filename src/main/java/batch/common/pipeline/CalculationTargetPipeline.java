@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 import batch.common.pipeline.steps.LoadDiscountsStep;
 import batch.common.pipeline.steps.LoadMonthlyChargeStep;
 import batch.common.pipeline.steps.LoadOneTimeChargeStep;
-import bill.application.monthlyfee.MonthlyFeeDataLoader;
-import bill.application.onetimecharge.OneTimeChargeDataLoader;
-import bill.domain.CalculationContext;
-import bill.domain.CalculationTarget;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
-import bill.port.out.ContractDiscountQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.monthlyfee.MonthlyFeeDataLoader;
+import wirelessbill.application.onetimecharge.OneTimeChargeDataLoader;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationTarget;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
+import wirelessbill.port.out.ContractDiscountQueryPort;
 
 /**
  * 계약 ID를 {@link CalculationTarget}으로 변환하는 파이프라인 구현체입니다.

@@ -1,6 +1,6 @@
-package bill.policy.onetimecharge.port;
+package wirelessbill.policy.onetimecharge.port;
 
-import bill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
+import wirelessbill.policy.onetimecharge.domain.installment.DeviceInstallmentMaster;
 
 public interface DeviceInstallmentCommandPort {
     void updateChargeStatus(DeviceInstallmentMaster deviceInstallmentMaster);

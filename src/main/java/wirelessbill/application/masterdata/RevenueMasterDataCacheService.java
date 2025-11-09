@@ -1,12 +1,12 @@
-package bill.application.masterdata;
+package wirelessbill.application.masterdata;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.masterdata.RevenueMasterData;
+import wirelessbill.port.out.RevenueMasterDataQueryPort;
 
 import org.springframework.stereotype.Service;
 
-import bill.domain.masterdata.RevenueMasterData;
-import bill.port.out.RevenueMasterDataQueryPort;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Map;

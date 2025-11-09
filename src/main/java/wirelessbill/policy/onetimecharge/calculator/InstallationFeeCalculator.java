@@ -1,4 +1,4 @@
-package bill.policy.onetimecharge.calculator;
+package wirelessbill.policy.onetimecharge.calculator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import bill.application.onetimecharge.OneTimeChargeCalculator;
-import bill.domain.CalculationContext;
-import bill.domain.CalculationResult;
-import bill.policy.onetimecharge.domain.InstallationHistory;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.application.onetimecharge.OneTimeChargeCalculator;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.policy.onetimecharge.domain.InstallationHistory;
 
 /**
  * 설치비 계산기

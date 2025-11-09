@@ -1,4 +1,4 @@
-package bill.policy.monthlyfee.loader;
+package wirelessbill.policy.monthlyfee.loader;
 
 import java.util.List;
 import java.util.Map;
@@ -6,15 +6,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import bill.application.monthlyfee.MonthlyFeeDataLoader;
-import bill.application.service.BillingPeriodService;
-import bill.domain.CalculationContext;
-import bill.domain.monthlyfee.DefaultPeriod;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
-import bill.policy.monthlyfee.port.ProductQueryPortResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.application.monthlyfee.MonthlyFeeDataLoader;
+import wirelessbill.application.service.BillingPeriodService;
+import wirelessbill.domain.CalculationContext;
+import wirelessbill.domain.monthlyfee.DefaultPeriod;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.policy.monthlyfee.domain.ContractWithProductsAndSuspensions;
+import wirelessbill.policy.monthlyfee.port.ProductQueryPortResolver;
 
 /**
  * ContractWithProductsAndSuspensions 데이터 로딩 전담 클래스

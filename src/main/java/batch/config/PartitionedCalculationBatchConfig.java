@@ -2,6 +2,12 @@ package batch.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.api.CalculationResultGroup;
+import wirelessbill.application.CalculationCommandService;
+import wirelessbill.domain.BillingCalculationPeriod;
+import wirelessbill.domain.BillingCalculationType;
+import wirelessbill.domain.CalculationTarget;
+import wirelessbill.port.out.CalculationResultSavePort;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.batch.core.Job;
@@ -31,14 +37,8 @@ import batch.partitioner.ContractPartitioner;
 import batch.processor.CalculationProcessor;
 import batch.tasklet.CalculationResultCleanupTasklet;
 import batch.writer.CalculationWriter;
-import bill.api.CalculationResultGroup;
-import bill.application.CalculationCommandService;
-import bill.domain.BillingCalculationPeriod;
-import bill.domain.BillingCalculationType;
-import bill.domain.CalculationTarget;
-import bill.port.out.CalculationResultSavePort;
 
-import static batch.common.constant.BatchConstants.CHUNK_SIZE;
+import static common.domain.constant.BatchConstants.CHUNK_SIZE;
 
 import java.time.LocalDate;
 import java.util.Arrays;

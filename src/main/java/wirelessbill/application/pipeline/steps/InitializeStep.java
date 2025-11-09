@@ -1,4 +1,4 @@
-package bill.application.pipeline.steps;
+package wirelessbill.application.pipeline.steps;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,14 +7,14 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import bill.application.monthlyfee.MonthlyFeeCalculator;
-import bill.application.onetimecharge.OneTimeChargeCalculator;
-import bill.application.pipeline.CalculationStep;
-import bill.application.pipeline.PipelineContext;
-import bill.domain.CalculationResult;
-import bill.domain.monthlyfee.MonthlyChargeDomain;
-import bill.domain.onetimecharge.OneTimeChargeDomain;
 import lombok.RequiredArgsConstructor;
+import wirelessbill.application.monthlyfee.MonthlyFeeCalculator;
+import wirelessbill.application.onetimecharge.OneTimeChargeCalculator;
+import wirelessbill.application.pipeline.CalculationStep;
+import wirelessbill.application.pipeline.PipelineContext;
+import wirelessbill.domain.CalculationResult;
+import wirelessbill.domain.monthlyfee.MonthlyChargeDomain;
+import wirelessbill.domain.onetimecharge.OneTimeChargeDomain;
 
 @RequiredArgsConstructor
 public class InitializeStep implements CalculationStep {
@@ -54,7 +54,7 @@ public class InitializeStep implements CalculationStep {
 
     private <T> List<CalculationResult<?>> processItems(
             Collection<T> items,
-            BiFunction<bill.domain.CalculationContext, T, List<? extends CalculationResult<?>>> processor,
+            BiFunction<wirelessbill.domain.CalculationContext, T, List<? extends CalculationResult<?>>> processor,
             PipelineContext context
     ) {
         if (items == null || items.isEmpty()) {

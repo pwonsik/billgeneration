@@ -1,6 +1,7 @@
 package batch.common.reader;
 
 import lombok.extern.slf4j.Slf4j;
+import wirelessbill.domain.CalculationContext;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisCursorItemReader;
@@ -12,9 +13,8 @@ import org.springframework.lang.NonNull;
 
 import batch.BillParameters;
 import batch.common.pipeline.DataTransformer;
-import bill.domain.CalculationContext;
 
-import static batch.common.constant.BatchConstants.CHUNK_SIZE;
+import static common.domain.constant.BatchConstants.CHUNK_SIZE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
